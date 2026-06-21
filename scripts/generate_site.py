@@ -647,87 +647,202 @@ def generate_og_images(items: list[dict], today_str: str) -> None:
     print("✅ OGP theory-*.png 生成（25理論）")
 
 
-# ── T2: インサイトHTML ─────────────────────────────────────────
+# ── インサイトHTML (リデザイン版) ──────────────────────────────
 def generate_insights_html(items: list[dict], today_str: str) -> str:
     if not items:
-        return '<p style="color:var(--text-light);font-size:.9rem;">まだデータが蓄積されていません。</p>'
+        return '<p style="color:var(--text-light);font-size:.9rem;padding:40px 0;">まだデータが蓄積されていません。</p>'
 
+    now       = datetime.now(JST)
+    week_ago  = (now - timedelta(days=7)).strftime("%Y-%m-%d")
+    total          = len(items)
+    recent_7       = sum(1 for i in items if i["date"] >= week_ago)
+    theory_types   = len(set(i["theory"] for i in items if i["theory"]))
+
+    # ── 統計カード ──
+    stats_html = f"""<div class="ins-stats-row">
+  <div class="ins-stat-card">
+    <div class="ins-stat-num">{total}<small>件</small></div>
+    <div class="ins-stat-label">Total Articles</div>
+    <div class="ins-stat-sub">累計収集・分析済み記事</div>
+  </div>
+  <div class="ins-stat-card">
+    <div class="ins-stat-num">{recent_7}<small>件</small></div>
+    <div class="ins-stat-label">This Week</div>
+    <div class="ins-stat-sub">直近7日間の新着</div>
+  </div>
+  <div class="ins-stat-card">
+    <div class="ins-stat-num">{theory_types}<small>理論</small></div>
+    <div class="ins-stat-label">Theories Applied</div>
+    <div class="ins-stat-sub">使用中の経営理論数</div>
+  </div>
+</div>"""
+
+    # ── 理論ランキング ──
     theory_counter: Counter = Counter(
-        i["theory"] or "未分類" for i in items if (i["theory"] or "未分類") != "未分類"
+        i["theory"] for i in items if i["theory"] and i["theory"] != "未分類"
     )
-    max_cnt    = max(theory_counter.values(), default=1)
-    top6       = theory_counter.most_common(6)
-    rank_html  = "".join(
-        f'<div class="rank-item">'
-        f'<span class="rank-label"><a href="../../theories/{THEORY_SLUGS.get(t,"")}/"\
- style="color:inherit;text-decoration:none;">{t}</a></span>'
-        f'<div class="rank-bar-bg"><div class="rank-bar" style="width:{int(c/max_cnt*100)}%"></div></div>'
-        f'<span class="rank-cnt">{c}件</span></div>'
-        for t, c in top6
-    )
-    featured   = top6[0][0] if top6 else ""
-    feat_desc  = THEORY_DESCRIPTIONS.get(featured, "")
-    feat_slug  = THEORY_SLUGS.get(featured, "")
-    feat_html  = (
-        f'<div class="theory-feature">'
-        f'<div class="theory-feature-name">🏆 最頻出理論：{featured}</div>'
-        f'<div class="theory-feature-text">{feat_desc}</div>'
-        f'<a href="../../theories/{feat_slug}/" class="theory-box-more" style="display:inline-block;margin-top:8px;">→ 理論詳細を見る</a>'
-        f'</div>'
-    ) if featured and feat_desc else ""
+    max_cnt = max(theory_counter.values(), default=1)
+    top8    = theory_counter.most_common(8)
+    rank_html = ""
+    for idx, (theory, cnt) in enumerate(top8, 1):
+        slug     = THEORY_SLUGS.get(theory, "")
+        url      = f"theories/{slug}/" if slug and slug != "others" else ""
+        name_tag = f'<a href="{url}">{theory}</a>' if url else theory
+        cls      = {1: "r1", 2: "r2", 3: "r3"}.get(idx, "")
+        bar_w    = int(cnt / max_cnt * 100)
+        rank_html += f"""<div class="ins-rank-item">
+  <div class="ins-rank-num {cls}">{idx}</div>
+  <div class="ins-rank-content">
+    <div class="ins-rank-theory">{name_tag}</div>
+    <div class="ins-rank-bar-bg"><div class="ins-rank-bar" style="width:{bar_w}%"></div></div>
+  </div>
+  <div class="ins-rank-cnt">{cnt}件</div>
+</div>"""
 
+    # 最頻出理論ボックス
+    top_theory   = top8[0][0] if top8 else ""
+    top_slug     = THEORY_SLUGS.get(top_theory, "")
+    top_desc     = THEORY_DESCRIPTIONS.get(top_theory, "")
+    feat_box_link = f'<a class="ins-feat-box-link" href="theories/{top_slug}/">→ 理論の詳細を見る</a>' if top_slug and top_slug != "others" else ""
+    feat_box = f"""<div class="ins-feat-box">
+  <div class="ins-feat-box-label">🏆 最頻出理論</div>
+  <div class="ins-feat-box-name">{top_theory}</div>
+  <div class="ins-feat-box-desc">{top_desc[:100]}…</div>
+  {feat_box_link}
+</div>""" if top_theory else ""
+
+    # ── キーワードクラウド ──
     tag_counter: Counter = Counter()
     for i in items:
         tag_counter.update(i["tags"])
-    max_tag   = max(tag_counter.values(), default=1)
-    tag_html  = "".join(
-        f'<div class="rank-item">'
-        f'<span class="rank-label">{tag}</span>'
-        f'<div class="rank-bar-bg"><div class="rank-bar" style="width:{int(c/max_tag*100)}%;background:var(--rose)"></div></div>'
-        f'<span class="rank-cnt">{c}件</span></div>'
-        for tag, c in tag_counter.most_common(5)
-    )
+    max_tag = max(tag_counter.values(), default=1)
+    kw_html = ""
+    for tag, cnt in tag_counter.most_common(14):
+        ratio = cnt / max_tag
+        sz    = "sz3" if ratio >= .65 else ("sz2" if ratio >= .35 else "sz1")
+        kw_html += f'<span class="ins-kw {sz}">{tag}</span>'
 
-    week_ago    = (datetime.now(JST) - timedelta(days=7)).strftime("%Y-%m-%d")
-    recent_cnt  = sum(1 for i in items if i["date"] >= week_ago)
-    rich_items  = [i for i in items if "【考察】" in i["summary"] or "【示唆】" in i["summary"]][:5]
-    feat_arts   = ""
-    if rich_items:
-        feat_arts = '<div class="insight-articles-title">💎 深掘り記事ピックアップ</div>'
-        for item in rich_items:
-            secs        = parse_summary_sections(item["summary"])
-            insight_txt = secs["insights"] or secs["analysis"] or ""
-            theory      = item["theory"] or "未分類"
-            la = f'href="{item["link"]}" target="_blank" rel="noopener"' if item["link"] else 'href="#"'
-            feat_arts += (
-                f'<div class="arc-card" style="margin-bottom:16px;">'
-                f'<div class="card-meta">{render_theory_badge(theory)}</div>'
-                f'<h3 class="card-headline"><a {la} style="text-decoration:none;color:inherit;">{item["headline"]}</a></h3>'
-                + (f'<div class="art-section insight"><span class="art-label">💡 示唆</span><p>{insight_txt}</p></div>' if insight_txt else f'<p class="card-summary">{secs["plain"]}</p>')
-                + f'<div class="card-foot"><span class="card-source">{item["source"]} / {format_date_ja(item["date"])}</span></div>'
-                f'</div>'
-            )
-
-    theory_list_link = '<p style="margin-top:24px;"><a href="../../theories/" style="color:var(--green-dk);font-weight:700;font-size:.9rem;">📚 全25理論の用語集を見る →</a></p>'
-
-    return f"""<div class="insights-grid">
-  <div class="insight-box">
-    <div class="insight-box-title">📊 よく出る経営理論 TOP6</div>
-    <div class="theory-rank">{rank_html}</div>
-    {feat_html}
+    # ── 週次カード ──
+    fb_url = urllib.parse.quote(f"{SITE_URL}#insights")
+    weekly_html = f"""<div class="ins-weekly-card">
+  <div class="ins-weekly-label">This Week's Volume</div>
+  <div class="ins-weekly-num">{recent_7}</div>
+  <div class="ins-weekly-sub">件のニュースを自動収集・解説</div>
+  <div class="ins-weekly-share">
+    <a href="https://www.facebook.com/sharer/sharer.php?u={fb_url}" target="_blank" rel="noopener">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+      レポートをシェア
+    </a>
   </div>
-  <div class="insight-box">
-    <div class="insight-box-title">🏷 注目トピック TOP5</div>
-    <div class="theory-rank">{tag_html}</div>
-    <div style="margin-top:20px;padding:14px;background:var(--bg);border-radius:10px;">
-      <div style="font-size:.72rem;font-weight:700;color:var(--text-light);margin-bottom:6px;">📈 直近7日間</div>
-      <div style="font-family:'Shippori Mincho',serif;font-size:1.6rem;font-weight:800;color:var(--text);">{recent_cnt}<small style="font-size:.85rem;font-weight:400;font-family:'Zen Kaku Gothic New',sans-serif;">件</small></div>
-      <div style="font-size:.72rem;color:var(--text-light);">のニュースを収集・解説</div>
+</div>"""
+
+    main_grid = f"""<div class="ins-main-grid">
+  <div class="ins-panel">
+    <div class="ins-panel-title">📊 経営理論ランキング</div>
+    <div class="ins-rank-list">{rank_html}</div>
+    {feat_box}
+  </div>
+  <div>
+    <div class="ins-panel">
+      <div class="ins-panel-title">🏷 注目キーワード</div>
+      <div class="ins-kw-cloud">{kw_html}</div>
+    </div>
+    {weekly_html}
+  </div>
+</div>"""
+
+    # ── フィーチャード記事 ──
+    rich_items = [i for i in items if "【考察】" in i["summary"] or "【示唆】" in i["summary"]]
+    feature_html = ""
+    if rich_items:
+        feat     = rich_items[0]
+        secs     = parse_summary_sections(feat["summary"])
+        facts_txt = (secs["facts"] or secs["plain"] or "")[:160]
+        ins_txt  = (secs["insights"] or secs["analysis"] or "")[:180]
+        theory   = feat["theory"] or "未分類"
+        date_ja  = format_date_ja(feat["date"])
+        link_a   = f'href="{feat["link"]}" target="_blank" rel="noopener"' if feat["link"] else 'href="javascript:void(0)"'
+        cat_svg  = """<svg viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:140px;opacity:.9">
+  <path d="M65 136 Q100 154 135 136 L130 200 Q100 212 70 200Z" fill="white" stroke="#3B1E08" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M72 143 Q50 166 54 186" stroke="#3B1E08" stroke-width="12" stroke-linecap="round" fill="none"/>
+  <path d="M128 142 Q152 116 154 92" stroke="#3B1E08" stroke-width="12" stroke-linecap="round" fill="none"/>
+  <ellipse cx="82" cy="210" rx="18" ry="11" fill="white" stroke="#3B1E08" stroke-width="3"/>
+  <ellipse cx="118" cy="210" rx="18" ry="11" fill="white" stroke="#3B1E08" stroke-width="3"/>
+  <path d="M44 58 Q50 8 86 28 Q80 52 60 62Z" fill="white" stroke="#3B1E08" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M49 56 Q55 16 84 30 Q78 50 63 58Z" fill="#F9C5D0"/>
+  <path d="M156 58 Q150 8 114 28 Q120 52 140 62Z" fill="white" stroke="#3B1E08" stroke-width="3.5" stroke-linejoin="round"/>
+  <path d="M151 56 Q145 16 116 30 Q122 50 137 58Z" fill="#F9C5D0"/>
+  <circle cx="100" cy="80" r="60" fill="white" stroke="#3B1E08" stroke-width="4"/>
+  <ellipse cx="100" cy="86" rx="5" ry="3.5" fill="#3B1E08"/>
+  <ellipse cx="68" cy="92" rx="14" ry="8" fill="#F4A0B4" opacity=".45"/>
+  <ellipse cx="132" cy="92" rx="14" ry="8" fill="#F4A0B4" opacity=".45"/>
+  <path d="M88 96 Q94 102 100 98 Q106 102 112 96" stroke="#3B1E08" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+</svg>"""
+        feature_html = f"""<div class="ins-section-label">Featured Article — 今週の注目記事</div>
+<div class="ins-feature-card">
+  <div>
+    <div class="ins-feature-theory">{render_theory_badge(theory)}</div>
+    <h3 class="ins-feature-headline">{feat["headline"]}</h3>
+    <p class="ins-feature-facts">{facts_txt}…</p>
+    <div class="ins-feature-insight">
+      <div class="ins-feature-insight-label">💡 示唆</div>
+      <p class="ins-feature-insight-text">{ins_txt}…</p>
+    </div>
+    <div class="ins-feature-actions">
+      <a class="ins-feature-btn" {link_a}>記事を読む →</a>
+      <span class="ins-feature-date">📅 {date_ja} ／ {feat["source"]}</span>
     </div>
   </div>
-</div>
-{feat_arts}
-{theory_list_link}"""
+  <div class="ins-feature-right">{cat_svg}</div>
+</div>"""
+
+    # ── 深掘り3記事グリッド ──
+    deep_pool = (rich_items[1:] if len(rich_items) > 1 else [])
+    if len(deep_pool) < 3:
+        others    = [i for i in items if i not in rich_items]
+        deep_pool = (deep_pool + others)[:3]
+    deep_cards = ""
+    for item in deep_pool[:3]:
+        secs    = parse_summary_sections(item["summary"])
+        excerpt = (secs["insights"] or secs["analysis"] or secs["plain"] or "")[:90]
+        theory  = item["theory"] or "未分類"
+        date_ja = format_date_ja(item["date"])
+        deep_cards += f"""<div class="ins-deep-card">
+  <div>{render_theory_badge(theory)}</div>
+  <div class="ins-deep-headline">{item["headline"]}</div>
+  <div class="ins-deep-excerpt">{excerpt}…</div>
+  <div class="ins-deep-foot">📅 {date_ja} ／ {item["source"]}</div>
+</div>"""
+    deep_html = f"""<div class="ins-section-label">深掘り記事ピックアップ</div>
+<div class="ins-deep-grid">{deep_cards}</div>""" if deep_cards else ""
+
+    # ── 理論CTA ──
+    theory_cta = f"""<div class="ins-theory-cta">
+  <div class="ins-theory-cta-title">📚 全25の経営理論を学ぶ</div>
+  <div class="ins-theory-cta-sub">入山章栄『世界標準の経営理論』掲載の全理論を実際のニュースと紐づけて解説。<br>理論別に記事を探すこともできます。</div>
+  <a class="ins-cta-btn" href="theories/">全理論の用語集を見る →</a>
+</div>"""
+
+    # ── シェアバナー ──
+    mail_body  = urllib.parse.quote(f"はるねこちゃんの週次インサイトレポートが面白いです。\n{SITE_URL}#insights")
+    share_html = f"""<div class="ins-share-banner">
+  <div>
+    <div class="ins-share-title">📣 このレポートをシェアする</div>
+    <div class="ins-share-sub">毎週更新。気になった方にぜひシェアを。</div>
+  </div>
+  <div class="ins-share-btns">
+    <a class="ins-share-fb" href="https://www.facebook.com/sharer/sharer.php?u={fb_url}" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+      Facebookでシェア
+    </a>
+    <a class="ins-share-mail" href="mailto:?subject=はるねこちゃん 今週の人事・経営インサイト&body={mail_body}">
+      📩 メールで紹介
+    </a>
+  </div>
+</div>"""
+
+    return stats_html + main_grid + feature_html + deep_html + theory_cta + share_html
+
 
 
 # ── ブログ: Notion取得 & パース ────────────────────────────────

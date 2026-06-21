@@ -167,22 +167,100 @@
     .arc-card .card-headline { font-size: 1rem; margin-bottom: 8px; }
     .arc-card .card-summary { font-size: .83rem; }
 
-    /* ─── INSIGHTS PAGE ─── */
-    .insight-banner { background: linear-gradient(135deg, var(--green-bg) 0%, var(--blue-bg) 100%); border: 1.5px solid var(--green-lt); border-radius: 20px; padding: 32px 36px; margin-bottom: 36px; }
-    .insight-banner-title { font-family: 'Shippori Mincho', serif; font-size: 1.3rem; font-weight: 800; color: var(--green-dk); margin-bottom: 10px; }
-    .insight-banner-sub { font-size: .85rem; color: var(--text-sub); line-height: 1.8; }
-    .insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 40px; }
-    .insight-box { background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: 0 2px 10px rgba(43,38,32,.05); }
-    .insight-box-title { font-family: 'Shippori Mincho', serif; font-size: .95rem; font-weight: 700; margin-bottom: 16px; color: var(--text); display: flex; align-items: center; gap: 8px; }
-    .theory-rank { display: flex; flex-direction: column; gap: 12px; }
-    .rank-item { display: flex; align-items: center; gap: 12px; }
-    .rank-label { font-size: .76rem; color: var(--text-sub); min-width: 100px; line-height: 1.3; }
-    .rank-bar-bg { flex: 1; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; }
-    .rank-bar { height: 100%; background: var(--green); border-radius: 4px; transition: width .5s; }
-    .rank-cnt { font-size: .7rem; font-weight: 700; color: var(--text-light); min-width: 24px; text-align: right; }
-    .theory-feature { background: var(--green-bg); border-radius: 12px; padding: 20px; margin-top: 16px; }
-    .theory-feature-name { font-size: .8rem; font-weight: 700; color: var(--green-dk); margin-bottom: 6px; }
-    .theory-feature-text { font-size: .82rem; color: var(--text-sub); line-height: 1.7; }
+    /* ─── INSIGHTS REDESIGN ─── */
+    .ins-hero { background: linear-gradient(140deg, #192E1D 0%, #2B1E0E 100%); padding: 72px 40px 60px; position: relative; overflow: hidden; }
+    .ins-hero::before { content: ''; position: absolute; top: -80px; right: -80px; width: 360px; height: 360px; background: radial-gradient(circle, rgba(107,143,113,.25) 0%, transparent 70%); pointer-events: none; }
+    .ins-hero::after { content: ''; position: absolute; bottom: -40px; left: 30%; width: 200px; height: 200px; background: radial-gradient(circle, rgba(200,130,74,.15) 0%, transparent 70%); pointer-events: none; }
+    .ins-hero-inner { max-width: 1080px; margin: 0 auto; position: relative; z-index: 1; }
+    .ins-hero-eyebrow { font-size: .66rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--green-lt); margin-bottom: 20px; display: inline-flex; align-items: center; gap: 10px; }
+    .ins-hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--green-lt); display: block; }
+    .ins-hero-h2 { font-family: 'Shippori Mincho', serif; font-size: clamp(2rem, 4vw, 3.4rem); font-weight: 800; line-height: 1.2; color: #fff; margin-bottom: 16px; }
+    .ins-hero-h2 em { font-style: normal; color: #A8D4AC; }
+    .ins-hero-sub { font-size: .9rem; color: rgba(255,255,255,.6); line-height: 1.9; max-width: 560px; }
+    .ins-body { max-width: 1080px; margin: 0 auto; padding: 48px 40px 80px; }
+    /* Stats */
+    .ins-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 48px; }
+    .ins-stat-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; padding: 24px 22px; position: relative; overflow: hidden; }
+    .ins-stat-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--green); }
+    .ins-stat-num { font-family: 'Shippori Mincho', serif; font-size: 2.6rem; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 6px; }
+    .ins-stat-num small { font-size: 1rem; font-family: 'Zen Kaku Gothic New', sans-serif; font-weight: 400; }
+    .ins-stat-label { font-size: .62rem; font-weight: 700; color: var(--text-light); letter-spacing: .1em; text-transform: uppercase; }
+    .ins-stat-sub { font-size: .72rem; color: var(--text-sub); margin-top: 4px; }
+    /* Main grid */
+    .ins-main-grid { display: grid; grid-template-columns: 1fr 340px; gap: 28px; margin-bottom: 48px; }
+    .ins-panel { background: var(--surface); border: 1.5px solid var(--border); border-radius: 20px; padding: 28px; }
+    .ins-panel-title { font-family: 'Shippori Mincho', serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    /* Leaderboard */
+    .ins-rank-list { display: flex; flex-direction: column; }
+    .ins-rank-item { display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--bg); }
+    .ins-rank-item:last-child { border-bottom: none; }
+    .ins-rank-num { font-family: 'Shippori Mincho', serif; font-size: 1.6rem; font-weight: 800; color: var(--border); width: 32px; flex-shrink: 0; text-align: center; line-height: 1; }
+    .ins-rank-num.r1 { color: #C8824A; } .ins-rank-num.r2 { color: #8B8B8B; } .ins-rank-num.r3 { color: #8B6C4A; }
+    .ins-rank-content { flex: 1; min-width: 0; }
+    .ins-rank-theory { font-size: .87rem; font-weight: 700; color: var(--text); margin-bottom: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ins-rank-theory a { color: inherit; text-decoration: none; transition: color .15s; }
+    .ins-rank-theory a:hover { color: var(--green-dk); }
+    .ins-rank-bar-bg { height: 5px; background: var(--bg); border-radius: 3px; overflow: hidden; }
+    .ins-rank-bar { height: 100%; background: linear-gradient(90deg, var(--green-dk), var(--green)); border-radius: 3px; transition: width .6s; }
+    .ins-rank-cnt { font-size: .72rem; font-weight: 700; color: var(--text-light); flex-shrink: 0; min-width: 28px; text-align: right; }
+    .ins-feat-box { background: var(--green-bg); border-radius: 12px; padding: 16px 18px; margin-top: 20px; }
+    .ins-feat-box-label { font-size: .6rem; font-weight: 700; color: var(--green-dk); letter-spacing: .1em; margin-bottom: 6px; }
+    .ins-feat-box-name { font-family: 'Shippori Mincho', serif; font-size: .95rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .ins-feat-box-desc { font-size: .78rem; color: var(--text-sub); line-height: 1.7; }
+    .ins-feat-box-link { display: inline-block; margin-top: 8px; font-size: .76rem; font-weight: 700; color: var(--green-dk); text-decoration: none; }
+    /* Keywords */
+    .ins-kw-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
+    .ins-kw { display: inline-block; padding: 6px 14px; border-radius: 20px; font-weight: 700; cursor: default; transition: transform .15s; border: 1.5px solid transparent; }
+    .ins-kw:hover { transform: translateY(-1px); }
+    .ins-kw.sz3 { font-size: .92rem; background: var(--green); color: #fff; }
+    .ins-kw.sz2 { font-size: .8rem; background: var(--green-bg); color: var(--green-dk); border-color: var(--green-lt); }
+    .ins-kw.sz1 { font-size: .72rem; background: var(--bg); color: var(--text-sub); border-color: var(--border); }
+    /* Weekly card */
+    .ins-weekly-card { background: linear-gradient(135deg, #192E1D 0%, #2B1E0E 100%); border-radius: 16px; padding: 22px; color: #fff; margin-top: 20px; }
+    .ins-weekly-label { font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .65; margin-bottom: 8px; }
+    .ins-weekly-num { font-family: 'Shippori Mincho', serif; font-size: 2.6rem; font-weight: 800; line-height: 1; }
+    .ins-weekly-sub { font-size: .74rem; opacity: .65; margin-top: 4px; }
+    .ins-weekly-share { margin-top: 16px; }
+    .ins-weekly-share a { display: inline-flex; align-items: center; gap: 6px; font-size: .75rem; font-weight: 700; color: #2B1E0E; background: #fff; padding: 8px 16px; border-radius: 20px; text-decoration: none; transition: opacity .15s; }
+    .ins-weekly-share a:hover { opacity: .9; }
+    /* Feature article */
+    .ins-section-label { font-size: .65rem; font-weight: 700; color: var(--text-light); letter-spacing: .12em; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+    .ins-section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .ins-feature-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 20px; padding: 36px 40px; box-shadow: 0 4px 28px rgba(43,38,32,.08); display: grid; grid-template-columns: 1fr 180px; gap: 40px; align-items: center; margin-bottom: 48px; }
+    .ins-feature-theory { margin-bottom: 14px; }
+    .ins-feature-headline { font-family: 'Shippori Mincho', serif; font-size: 1.5rem; font-weight: 800; line-height: 1.5; color: var(--text); margin-bottom: 14px; }
+    .ins-feature-facts { font-size: .86rem; color: var(--text-sub); line-height: 1.9; margin-bottom: 14px; }
+    .ins-feature-insight { background: var(--blue-bg); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; padding: 12px 16px; margin-bottom: 18px; }
+    .ins-feature-insight-label { font-size: .6rem; font-weight: 700; color: var(--blue); letter-spacing: .08em; margin-bottom: 4px; }
+    .ins-feature-insight-text { font-size: .83rem; color: var(--text); line-height: 1.8; }
+    .ins-feature-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .ins-feature-btn { display: inline-flex; align-items: center; gap: 6px; font-size: .8rem; font-weight: 700; color: var(--green-dk); background: var(--green-bg); border: 1px solid var(--green-lt); padding: 9px 20px; border-radius: 20px; text-decoration: none; transition: background .15s; }
+    .ins-feature-btn:hover { background: var(--green-lt); }
+    .ins-feature-date { font-size: .72rem; color: var(--text-light); }
+    .ins-feature-right { text-align: center; }
+    /* Deep dives */
+    .ins-deep-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 48px; }
+    .ins-deep-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; padding: 20px 20px 16px; transition: box-shadow .2s, transform .2s; }
+    .ins-deep-card:hover { box-shadow: 0 8px 28px rgba(43,38,32,.1); transform: translateY(-2px); }
+    .ins-deep-headline { font-family: 'Shippori Mincho', serif; font-size: .93rem; font-weight: 700; line-height: 1.5; margin: 10px 0 8px; color: var(--text); }
+    .ins-deep-excerpt { font-size: .79rem; color: var(--text-sub); line-height: 1.75; margin-bottom: 12px; }
+    .ins-deep-foot { font-size: .67rem; color: var(--text-light); }
+    /* CTA */
+    .ins-theory-cta { background: linear-gradient(135deg, var(--green-bg) 0%, var(--blue-bg) 100%); border: 1.5px solid var(--green-lt); border-radius: 20px; padding: 40px; text-align: center; margin-bottom: 36px; }
+    .ins-theory-cta-title { font-family: 'Shippori Mincho', serif; font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+    .ins-theory-cta-sub { font-size: .87rem; color: var(--text-sub); line-height: 1.8; margin-bottom: 24px; }
+    .ins-cta-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--green); color: #fff; font-size: .9rem; font-weight: 700; padding: 14px 34px; border-radius: 28px; text-decoration: none; transition: background .15s; box-shadow: 0 4px 16px rgba(107,143,113,.35); }
+    .ins-cta-btn:hover { background: var(--green-dk); }
+    /* Share banner */
+    .ins-share-banner { background: #1A1410; border-radius: 20px; padding: 28px 36px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .ins-share-title { font-family: 'Shippori Mincho', serif; font-size: .95rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .ins-share-sub { font-size: .76rem; color: rgba(255,255,255,.5); }
+    .ins-share-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+    .ins-share-fb { display: inline-flex; align-items: center; gap: 7px; font-size: .8rem; font-weight: 700; color: #fff; background: #1877F2; padding: 10px 20px; border-radius: 24px; text-decoration: none; transition: background .15s; }
+    .ins-share-fb:hover { background: #145DB2; }
+    .ins-share-mail { display: inline-flex; align-items: center; gap: 7px; font-size: .8rem; font-weight: 700; color: #1A1410; background: #fff; padding: 10px 20px; border-radius: 24px; text-decoration: none; transition: opacity .15s; }
+    .ins-share-mail:hover { opacity: .85; }
+    /* Insights old compat */
     .insight-articles-title { font-family: 'Shippori Mincho', serif; font-size: 1rem; font-weight: 700; margin: 32px 0 16px; color: var(--text); border-bottom: 2px solid var(--border); padding-bottom: 10px; }
 
     /* ─── ABOUT PAGE ─── */
@@ -281,6 +359,27 @@
     @keyframes bodyBob {
       from { transform: translateY(0) rotate(-1.5deg); }
       to   { transform: translateY(-5px) rotate(1.5deg); }
+    }
+
+    /* ─── RESPONSIVE: INSIGHTS ─── */
+    @media (max-width: 880px) {
+      .ins-main-grid { grid-template-columns: 1fr; }
+      .ins-feature-card { grid-template-columns: 1fr; }
+      .ins-feature-right { display: none; }
+      .ins-deep-grid { grid-template-columns: 1fr 1fr; }
+      .ins-body { padding: 32px 20px 60px; }
+    }
+    @media (max-width: 600px) {
+      .ins-hero { padding: 44px 16px 36px; }
+      .ins-body { padding: 24px 14px 56px; }
+      .ins-stats-row { grid-template-columns: 1fr 1fr; }
+      .ins-stats-row .ins-stat-card:last-child { grid-column: 1 / -1; }
+      .ins-stat-num { font-size: 2rem; }
+      .ins-deep-grid { grid-template-columns: 1fr; }
+      .ins-feature-card { padding: 22px 18px; }
+      .ins-theory-cta { padding: 28px 18px; }
+      .ins-share-banner { flex-direction: column; text-align: center; }
+      .ins-share-btns { justify-content: center; }
     }
 
     /* ─── RESPONSIVE: TABLET ─── */
@@ -664,11 +763,14 @@
      PAGE 3: 考察・示唆
 ══════════════════════════════════════════════ -->
 <div class="page-section" id="insights">
-  <div class="full-wrap">
-    <div class="insight-banner">
-      <div class="insight-banner-title">🔍 考察・示唆レポート</div>
-      <div class="insight-banner-sub">AIが蓄積データを分析。どの経営理論が今の人事・経営トレンドを読み解くカギになっているか、傾向と示唆をお伝えします。</div>
+  <div class="ins-hero">
+    <div class="ins-hero-inner">
+      <span class="ins-hero-eyebrow">Weekly Insights Report</span>
+      <h2 class="ins-hero-h2">今週の<em>人事・経営</em><br>トレンド分析</h2>
+      <p class="ins-hero-sub">AIが収集・分析した人事・経営ニュースを、入山章栄『世界標準の経営理論』で読み解く週次レポート。現場で今すぐ使えるインサイトをお届けします。</p>
     </div>
+  </div>
+  <div class="ins-body">
     <!-- INSIGHTS_HTML -->
   </div>
 </div>
