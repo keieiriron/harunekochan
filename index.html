@@ -7,7 +7,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #FAF7F2;
@@ -15,12 +15,18 @@
       --border: #E5DFD4;
       --text: #2B2620;
       --text-sub: #6B645C;
+      --text-light: #A89F96;
       --green: #6B8F71;
       --green-dark: #4F6E55;
+      --green-bg: #EEF4EF;
+      --green-light: #D4E6D7;
       --rose: #E8A0B4;
+      --rose-bg: #FDF0F4;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
@@ -30,138 +36,353 @@
       line-height: 1.75;
     }
 
-    /* ===== HEADER ===== */
-    header {
-      background: var(--surface);
+    /* ===== NAV ===== */
+    nav {
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
-      padding: 20px 24px;
+      padding: 0 32px;
       display: flex;
       align-items: center;
-      gap: 14px;
+      height: 60px;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 200;
     }
 
-    .header-icon {
-      width: 44px;
-      height: 44px;
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
       flex-shrink: 0;
     }
 
-    .header-title h1 {
+    .nav-logo-img {
+      width: 34px;
+      height: 34px;
+    }
+
+    .nav-logo-text {
       font-family: 'Shippori Mincho', serif;
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 700;
-      letter-spacing: 0.04em;
       color: var(--text);
+      letter-spacing: 0.04em;
     }
 
-    .header-title p {
-      font-size: 0.75rem;
+    .nav-divider { flex: 1; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .nav-links a {
+      font-size: 0.78rem;
       color: var(--text-sub);
-      margin-top: 1px;
+      text-decoration: none;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: color 0.15s;
     }
 
-    /* ===== MAIN ===== */
-    main {
-      max-width: 760px;
+    .nav-links a:hover { color: var(--green-dark); }
+
+    .nav-badge {
+      background: var(--green);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 32px 16px 64px;
+      padding: 56px 32px 0;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 32px;
+      align-items: end;
     }
 
-    /* ===== DATE LABEL ===== */
-    .date-label {
-      font-size: 0.8rem;
+    .hero-left {}
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--green);
+    }
+
+    .hero-title {
+      font-family: 'Shippori Mincho', serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text);
+      letter-spacing: 0.01em;
+      margin-bottom: 18px;
+    }
+
+    .hero-title .accent { color: var(--green); }
+
+    .hero-desc {
+      font-size: 0.9rem;
       color: var(--text-sub);
-      text-align: right;
-      margin-bottom: 20px;
+      line-height: 1.85;
+      max-width: 500px;
+      margin-bottom: 36px;
     }
 
-    /* ===== CARD ===== */
-    .card {
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      padding: 20px 24px;
+      background: var(--bg);
+      border-radius: 12px 12px 0 0;
+      border: 1px solid var(--border);
+      border-bottom: none;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stat-value {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .stat-value span {
+      font-size: 0.9rem;
+      font-weight: 400;
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: var(--text-light);
+      letter-spacing: 0.05em;
+    }
+
+    .stat-divider {
+      width: 1px;
+      background: var(--border);
+      align-self: stretch;
+    }
+
+    /* Cat characters */
+    .hero-right {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .cat-hero {
+      width: 200px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* ===== MAIN LAYOUT ===== */
+    .layout {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 48px;
+      align-items: start;
+    }
+
+    /* ===== SECTION TITLE ===== */
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .section-icon {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+    }
+
+    .section-head-text {}
+
+    .section-title {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.04em;
+    }
+
+    .section-subtitle {
+      font-size: 0.72rem;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+
+    /* ===== TODAY'S CARDS ===== */
+    .today-section { }
+
+    .news-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 24px;
+      border-radius: 16px;
+      padding: 28px;
       margin-bottom: 20px;
-      transition: box-shadow 0.2s;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      position: relative;
     }
 
-    .card:hover {
-      box-shadow: 0 4px 16px rgba(43,38,32,0.08);
+    .news-card:hover {
+      box-shadow: 0 8px 32px rgba(43,38,32,0.09);
+      border-color: var(--green-light);
     }
 
-    .card-header {
+    .card-num {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      font-family: 'Shippori Mincho', serif;
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--border);
+      line-height: 1;
+    }
+
+    .card-meta {
       display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+      padding-right: 60px;
     }
 
     .theory-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       background: var(--green);
       color: #fff;
-      font-size: 0.68rem;
-      font-weight: 500;
-      padding: 3px 10px;
+      font-size: 0.66rem;
+      font-weight: 700;
+      padding: 4px 12px;
       border-radius: 20px;
-      white-space: nowrap;
-      flex-shrink: 0;
-      margin-top: 3px;
+      letter-spacing: 0.04em;
+    }
+
+    .theory-badge::before {
+      content: '📚';
+      font-size: 0.6rem;
+    }
+
+    .tag {
+      color: var(--text-light);
+      font-size: 0.68rem;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+    }
+
+    .new-badge {
+      background: var(--rose);
+      color: #fff;
+      font-size: 0.62rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
     }
 
     .card-headline {
       font-family: 'Shippori Mincho', serif;
-      font-size: 1.05rem;
-      font-weight: 600;
-      line-height: 1.55;
+      font-size: 1.3rem;
+      font-weight: 700;
+      line-height: 1.5;
       color: var(--text);
-    }
-
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 14px;
-    }
-
-    .tag {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--text-sub);
-      font-size: 0.72rem;
-      padding: 2px 10px;
-      border-radius: 20px;
+      margin-bottom: 12px;
+      letter-spacing: 0.01em;
     }
 
     .card-summary {
-      font-size: 0.9rem;
-      color: var(--text);
-      line-height: 1.8;
-      margin-bottom: 16px;
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      line-height: 1.85;
+      margin-bottom: 18px;
     }
 
     .theory-box {
-      background: #F0F5F1;
+      background: var(--green-bg);
       border-left: 3px solid var(--green);
-      border-radius: 0 8px 8px 0;
-      padding: 12px 16px;
-      margin-bottom: 16px;
+      border-radius: 0 10px 10px 0;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
     }
 
+    .theory-box-cat {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+
+    .theory-box-content {}
+
     .theory-box-label {
-      font-size: 0.7rem;
-      font-weight: 500;
+      font-size: 0.67rem;
+      font-weight: 700;
       color: var(--green-dark);
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       margin-bottom: 4px;
     }
 
     .theory-box-text {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--text);
-      line-height: 1.7;
+      line-height: 1.75;
     }
 
     .card-footer {
@@ -170,134 +391,653 @@
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 8px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
     }
 
-    .source {
-      font-size: 0.75rem;
-      color: var(--text-sub);
+    .card-source {
+      font-size: 0.72rem;
+      color: var(--text-light);
     }
 
     .read-link {
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--green-dark);
       text-decoration: none;
-      border: 1px solid var(--green);
-      border-radius: 6px;
-      padding: 4px 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--green-bg);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--green-light);
       transition: background 0.15s;
     }
 
-    .read-link:hover {
-      background: var(--green);
-      color: #fff;
-    }
+    .read-link:hover { background: var(--green-light); }
 
     /* ===== EMPTY STATE ===== */
-    .empty {
+    .empty-state {
       text-align: center;
-      padding: 64px 16px;
+      padding: 64px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+    }
+
+    .empty-state .cat-sleep {
+      width: 100px;
+      margin: 0 auto 20px;
+    }
+
+    .empty-state p {
+      font-size: 0.9rem;
       color: var(--text-sub);
     }
 
-    .empty svg {
-      width: 56px;
-      height: 56px;
-      margin-bottom: 16px;
-      opacity: 0.4;
+    /* ===== SIDEBAR ===== */
+    .sidebar {}
+
+    .sidebar-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
     }
 
-    .empty p {
-      font-size: 0.9rem;
+    .sidebar-title {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Topics */
+    .topic-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .topic-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      font-size: 0.75rem;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: default;
+      transition: background 0.15s;
+    }
+
+    .topic-tag:hover {
+      background: var(--green-bg);
+      border-color: var(--green-light);
+      color: var(--green-dark);
+    }
+
+    .topic-count {
+      font-size: 0.65rem;
+      color: var(--text-light);
+      background: var(--border);
+      padding: 1px 6px;
+      border-radius: 10px;
+    }
+
+    /* Archive */
+    .archive-group {
+      margin-bottom: 16px;
+    }
+
+    .archive-date {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-light);
+      letter-spacing: 0.06em;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 10px;
+    }
+
+    .archive-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--bg);
+      text-decoration: none;
+    }
+
+    .archive-theory-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .archive-headline {
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      line-height: 1.5;
+      transition: color 0.15s;
+    }
+
+    .archive-item:hover .archive-headline { color: var(--green-dark); }
+
+    /* Cat mascot sidebar */
+    .sidebar-mascot {
+      text-align: center;
+      padding: 20px 16px 8px;
+    }
+
+    .sidebar-mascot .cat-think {
+      width: 80px;
+      margin: 0 auto 10px;
+    }
+
+    .sidebar-mascot p {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      line-height: 1.6;
     }
 
     /* ===== FOOTER ===== */
     footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 16px;
-      text-align: center;
-      font-size: 0.75rem;
-      color: var(--text-sub);
+      background: var(--text);
+      color: rgba(255,255,255,0.6);
+      padding: 40px 32px;
     }
 
-    footer a {
-      color: var(--green-dark);
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .footer-brand-name {
+      font-family: 'Shippori Mincho', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .footer-desc {
+      font-size: 0.75rem;
+      line-height: 1.7;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+    }
+
+    .footer-links a {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.5);
       text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover { color: #fff; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 860px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding-bottom: 32px;
+      }
+      .hero-right { display: none; }
+      .layout { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-links { align-items: flex-start; }
+      nav { padding: 0 16px; }
+      .layout { padding: 32px 16px 60px; }
     }
 
     @media (max-width: 480px) {
-      .card { padding: 18px; }
-      .card-headline { font-size: 0.95rem; }
+      .hero-inner { padding: 32px 16px 0; }
+      .hero-title { font-size: 1.9rem; }
+      .card-headline { font-size: 1.1rem; }
+      .news-card { padding: 20px; }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <img class="header-icon" src="favicon.svg" alt="はるねこちゃん">
-  <div class="header-title">
-    <h1>はるねこちゃん</h1>
-    <p>人事・経営ニュース × 世界標準の経営理論</p>
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img class="nav-logo-img" src="favicon.svg" alt="はるねこちゃん">
+    <span class="nav-logo-text">はるねこちゃん</span>
+  </a>
+  <span class="nav-divider"></span>
+  <div class="nav-links">
+    <a href="#today">今日のニュース</a>
+    <a href="#archive">アーカイブ</a>
+    <span class="nav-badge">毎朝自動更新</span>
   </div>
-</header>
+</nav>
 
-<main>
-  <p class="date-label">2026年6月21日 更新</p>
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Daily HR &amp; Management News</p>
+      <h1 class="hero-title">人事・経営の今を<br><span class="accent">理論で読み解く</span></h1>
+      <p class="hero-desc">毎朝届く厳選ニュースを、入山章栄『世界標準の経営理論』のフレームワークで解説。人事・経営の本質をつかむ、津田大也さん専用のAI秘書サイトです。</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-value">6<span>件</span></div>
+          <div class="stat-label">TODAY'S NEWS</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <div class="stat-value">6<span>件</span></div>
+          <div class="stat-label">TOTAL ARTICLES</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <div class="stat-value">3<span>理論</span></div>
+          <div class="stat-label">MANAGEMENT THEORY</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <!-- Cat: Waving -->
+      <svg class="cat-hero" viewBox="0 0 160 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- tail -->
+        <path d="M88 185 Q120 160 108 130" stroke="#6B8F71" stroke-width="10" stroke-linecap="round" fill="none"/>
+        <!-- body -->
+        <ellipse cx="78" cy="155" rx="42" ry="36" fill="#6B8F71"/>
+        <!-- left leg -->
+        <ellipse cx="58" cy="186" rx="12" ry="9" fill="#6B8F71"/>
+        <!-- right leg -->
+        <ellipse cx="94" cy="186" rx="12" ry="9" fill="#6B8F71"/>
+        <!-- left arm down -->
+        <ellipse cx="42" cy="152" rx="10" ry="16" fill="#6B8F71" transform="rotate(10 42 152)"/>
+        <!-- right arm raised (waving) -->
+        <ellipse cx="122" cy="118" rx="10" ry="18" fill="#6B8F71" transform="rotate(-40 122 118)"/>
+        <!-- paw right -->
+        <circle cx="136" cy="106" r="10" fill="#6B8F71"/>
+        <!-- paw left -->
+        <circle cx="40" cy="166" r="9" fill="#6B8F71"/>
+        <!-- head -->
+        <circle cx="78" cy="90" r="36" fill="#6B8F71"/>
+        <!-- ear left -->
+        <polygon points="48,70 54,44 70,68" fill="#6B8F71"/>
+        <!-- ear right -->
+        <polygon points="108,70 102,44 86,68" fill="#6B8F71"/>
+        <!-- inner ear left -->
+        <polygon points="51,67 56,48 68,66" fill="#E8A0B4"/>
+        <!-- inner ear right -->
+        <polygon points="105,67 100,48 88,66" fill="#E8A0B4"/>
+        <!-- face white area -->
+        <ellipse cx="78" cy="96" rx="22" ry="18" fill="#FAF7F2" opacity="0.3"/>
+        <!-- eyes -->
+        <ellipse cx="64" cy="86" rx="6" ry="7" fill="#FAF7F2"/>
+        <ellipse cx="92" cy="86" rx="6" ry="7" fill="#FAF7F2"/>
+        <!-- pupils -->
+        <circle cx="65" cy="87" r="4" fill="#2B2620"/>
+        <circle cx="93" cy="87" r="4" fill="#2B2620"/>
+        <!-- eye shine -->
+        <circle cx="67" cy="85" r="1.5" fill="#fff"/>
+        <circle cx="95" cy="85" r="1.5" fill="#fff"/>
+        <!-- nose -->
+        <ellipse cx="78" cy="98" rx="4" ry="3" fill="#E8A0B4"/>
+        <!-- mouth -->
+        <path d="M72 103 Q78 108 84 103" stroke="#E8A0B4" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <!-- whiskers left -->
+        <line x1="42" y1="96" x2="64" y2="100" stroke="#FAF7F2" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+        <line x1="42" y1="102" x2="64" y2="102" stroke="#FAF7F2" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+        <!-- whiskers right -->
+        <line x1="114" y1="96" x2="92" y2="100" stroke="#FAF7F2" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+        <line x1="114" y1="102" x2="92" y2="102" stroke="#FAF7F2" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+        <!-- sparkles -->
+        <text x="130" y="76" font-size="14" fill="#E8A0B4">✦</text>
+        <text x="18" y="82" font-size="10" fill="#6B8F71">✦</text>
+      </svg>
+    </div>
+  </div>
+</div>
 
-  <div id="news-container">
-    
-    <article class="card">
-      <div class="card-header">
+<!-- MAIN LAYOUT -->
+<div class="layout">
+
+  <!-- ===== LEFT: MAIN CONTENT ===== -->
+  <div>
+
+    <!-- TODAY'S PICKS -->
+    <section id="today">
+      <div class="section-head">
+        <!-- Cat: Reading -->
+        <svg class="section-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="13" r="10" fill="#6B8F71"/>
+          <polygon points="10,7 13,1 16,7" fill="#6B8F71"/>
+          <polygon points="26,7 23,1 20,7" fill="#6B8F71"/>
+          <polygon points="11,6 13,2 15,6" fill="#E8A0B4"/>
+          <polygon points="25,6 23,2 21,6" fill="#E8A0B4"/>
+          <ellipse cx="14" cy="12" rx="2.5" ry="3" fill="#FAF7F2"/>
+          <ellipse cx="22" cy="12" rx="2.5" ry="3" fill="#FAF7F2"/>
+          <circle cx="14.5" cy="12.5" r="1.5" fill="#2B2620"/>
+          <circle cx="22.5" cy="12.5" r="1.5" fill="#2B2620"/>
+          <ellipse cx="18" cy="17" rx="1.5" ry="1" fill="#E8A0B4"/>
+          <ellipse cx="18" cy="27" rx="11" ry="9" fill="#6B8F71"/>
+          <!-- newspaper -->
+          <rect x="22" y="20" width="12" height="9" rx="2" fill="#FAF7F2" stroke="#E5DFD4" stroke-width="0.8"/>
+          <line x1="23.5" y1="23" x2="32.5" y2="23" stroke="#E5DFD4" stroke-width="1"/>
+          <line x1="23.5" y1="25.5" x2="30" y2="25.5" stroke="#E5DFD4" stroke-width="1"/>
+        </svg>
+        <div class="section-head-text">
+          <div class="section-title">TODAY'S PICKS — 6月21日</div>
+          <div class="section-subtitle">今日の人事・経営ニュース</div>
+        </div>
+      </div>
+
+          <div class="news-card">
+      <div class="card-num">01</div>
+      <div class="card-meta">
         <span class="theory-badge">センスメイキング理論</span>
-        <h2 class="card-headline">「管理職になりたくない」、背景に負担増</h2>
+        <span class="new-badge">NEW</span>
+        <span class="tag">管理職</span><span class="tag">リーダーシップ</span>
       </div>
-      <div class="card-tags"><span class="tag">管理職</span><span class="tag">組織変革</span></div>
-      <p class="card-summary">HR総研の調査で、管理職の役割や負担が増す中、若手が昇進を避ける傾向が浮き彫りに。本人の意欲だけでなく、役割設計そのものの見直しが必要との指摘が出ている。</p>
-            <div class="theory-box">
-        <div class="theory-box-label">経営理論の視点 ▶ センスメイキング理論</div>
-        <p class="theory-box-text">不確実な状況を人々がどう「意味づけ」するかに注目する組織論。変化の渦中にあるとき、リーダーが語るナラティブが組織行動を方向づけます。</p>
-      </div>
+      <h2 class="card-headline">若手の失敗経験、6割超が成長につながると回答</h2>
+      <p class="card-summary">ジェイックが20代正社員258名を調査したところ、直近1年で大きな失敗を経験したのは約3割、そのうち6割超が「成長につながった」と回答した。失敗の主因は知識・スキル不足と判断ミスであり、上司が原因分析に伴走するマネジメントスタイルが成長促進に有効であることが示唆された。</p>
+      <div class="theory-box">
+          <svg class="theory-box-cat" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="16" r="10" fill="#6B8F71"/>
+          <polygon points="12,10 14,4 18,10" fill="#6B8F71"/>
+          <polygon points="28,10 26,4 22,10" fill="#6B8F71"/>
+          <polygon points="12.5,9 14.5,5 17.5,9" fill="#E8A0B4"/>
+          <polygon points="27.5,9 25.5,5 22.5,9" fill="#E8A0B4"/>
+          <ellipse cx="16" cy="15" rx="2.5" ry="3" fill="#FAF7F2"/>
+          <ellipse cx="24" cy="15" rx="2.5" ry="3" fill="#FAF7F2"/>
+          <circle cx="16.5" cy="15.5" r="1.5" fill="#2B2620"/>
+          <circle cx="24.5" cy="15.5" r="1.5" fill="#2B2620"/>
+          <ellipse cx="20" cy="20" rx="1.5" ry="1" fill="#E8A0B4"/>
+          <ellipse cx="20" cy="31" rx="10" ry="8" fill="#6B8F71"/>
+          <ellipse cx="13" cy="38" rx="5" ry="3.5" fill="#6B8F71"/>
+          <ellipse cx="27" cy="38" rx="5" ry="3.5" fill="#6B8F71"/>
+          <text x="28" y="10" font-size="7" fill="#E8A0B4">?</text>
+        </svg>
+          <div class="theory-box-content">
+            <div class="theory-box-label">経営理論の視点 ▶ センスメイキング理論</div>
+            <p class="theory-box-text">不確実な状況を人々がどう「意味づけ」するかに注目する組織論。変化の渦中にあるとき、リーダーが語るナラティブが組織行動を方向づけます。</p>
+          </div>
+        </div>
       <div class="card-footer">
-        <span class="source">HR総研 調査(2026年4月実施)</span>
+        <span class="card-source">日本の人事部（ジェイック調査） 2026年6月18日</span>
+        <a class="read-link" href="https://jinjibu.jp/news/detl/26522/" target="_blank" rel="noopener">元記事を読む →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="card-num">02</div>
+      <div class="card-meta">
+        <span class="theory-badge">ダイナミック・ケイパビリティ</span>
+        <span class="new-badge">NEW</span>
+        <span class="tag">採用</span><span class="tag">AI活用</span>
+      </div>
+      <h2 class="card-headline">採用AIを5割超の企業が「機能していない」</h2>
+      <p class="card-summary">TalentXが従業員500名超の企業の人事担当者213名を調査。採用AIを導入した企業の53.3%が工数削減や費用対効果を実現できていないと回答し、67.9%がAIと人の役割分担が不明確と答えた。成功の鍵はツール導入ではなく、候補者体験を軸とした採用戦略の再設計にあるとされる。</p>
+      <div class="theory-box">
+          <svg class="theory-box-cat" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="16" r="10" fill="#6B8F71"/>
+          <polygon points="12,10 14,4 18,10" fill="#6B8F71"/>
+          <polygon points="28,10 26,4 22,10" fill="#6B8F71"/>
+          <polygon points="12.5,9 14.5,5 17.5,9" fill="#E8A0B4"/>
+          <polygon points="27.5,9 25.5,5 22.5,9" fill="#E8A0B4"/>
+          <ellipse cx="16" cy="15" rx="2.5" ry="3" fill="#FAF7F2"/>
+          <ellipse cx="24" cy="15" rx="2.5" ry="3" fill="#FAF7F2"/>
+          <circle cx="16.5" cy="15.5" r="1.5" fill="#2B2620"/>
+          <circle cx="24.5" cy="15.5" r="1.5" fill="#2B2620"/>
+          <ellipse cx="20" cy="20" rx="1.5" ry="1" fill="#E8A0B4"/>
+          <ellipse cx="20" cy="31" rx="10" ry="8" fill="#6B8F71"/>
+          <ellipse cx="13" cy="38" rx="5" ry="3.5" fill="#6B8F71"/>
+          <ellipse cx="27" cy="38" rx="5" ry="3.5" fill="#6B8F71"/>
+          <text x="28" y="10" font-size="7" fill="#E8A0B4">?</text>
+        </svg>
+          <div class="theory-box-content">
+            <div class="theory-box-label">経営理論の視点 ▶ ダイナミック・ケイパビリティ</div>
+            <p class="theory-box-text">環境変化に合わせて自社の能力を感知・捕捉・再構成する力。テクノロジーが急変する時代において、静的な強みではなく変化する能力そのものが競争優位になります。</p>
+          </div>
+        </div>
+      <div class="card-footer">
+        <span class="card-source">TalentX / PR TIMES 2026年6月18日</span>
+        <a class="read-link" href="https://prtimes.jp/main/html/rd/p/000000268.000036924.html" target="_blank" rel="noopener">元記事を読む →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="card-num">03</div>
+      <div class="card-meta">
+        <span class="theory-badge">資源ベース理論(RBV)</span>
+        <span class="new-badge">NEW</span>
+        <span class="tag">人事制度</span>
+      </div>
+      <h2 class="card-headline">「天職」に出会えた人は約4割</h2>
+      <p class="card-summary">Persol Career（doda）が働く人約5,000名に「天職」意識を調査した結果、自身が天職に就いていると感じる人は約41%にとどまった。天職の条件として「仕事への熱意・関心」「強みや能力の活用」が上位に挙がり、職種によっても定義が異なることが判明。キャリア設計や人材育成施策への活用が期待される。</p>
+      
+      <div class="card-footer">
+        <span class="card-source">日本の人事部（doda/Persol Career調査） 2026年6月19日</span>
+        <a class="read-link" href="https://jinjibu.jp/news/detl/26535/" target="_blank" rel="noopener">元記事を読む →</a>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="card-num">04</div>
+      <div class="card-meta">
+        <span class="theory-badge">センスメイキング理論</span>
+        <span class="new-badge">NEW</span>
+        <span class="tag">管理職</span><span class="tag">組織変革</span>
+      </div>
+      <h2 class="card-headline">「管理職になりたくない」、背景に負担増</h2>
+      <p class="card-summary">HR総研の調査で、管理職の役割や負担が増す中、若手が昇進を避ける傾向が浮き彫りに。本人の意欲だけでなく、役割設計そのものの見直しが必要との指摘が出ている。</p>
+      <div class="theory-box">
+          <svg class="theory-box-cat" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="16" r="10" fill="#6B8F71"/>
+          <polygon points="12,10 14,4 18,10" fill="#6B8F71"/>
+          <polygon points="28,10 26,4 22,10" fill="#6B8F71"/>
+          <polygon points="12.5,9 14.5,5 17.5,9" fill="#E8A0B4"/>
+          <polygon points="27.5,9 25.5,5 22.5,9" fill="#E8A0B4"/>
+          <ellipse cx="16" cy="15" rx="2.5" ry="3" fill="#FAF7F2"/>
+          <ellipse cx="24" cy="15" rx="2.5" ry="3" fill="#FAF7F2"/>
+          <circle cx="16.5" cy="15.5" r="1.5" fill="#2B2620"/>
+          <circle cx="24.5" cy="15.5" r="1.5" fill="#2B2620"/>
+          <ellipse cx="20" cy="20" rx="1.5" ry="1" fill="#E8A0B4"/>
+          <ellipse cx="20" cy="31" rx="10" ry="8" fill="#6B8F71"/>
+          <ellipse cx="13" cy="38" rx="5" ry="3.5" fill="#6B8F71"/>
+          <ellipse cx="27" cy="38" rx="5" ry="3.5" fill="#6B8F71"/>
+          <text x="28" y="10" font-size="7" fill="#E8A0B4">?</text>
+        </svg>
+          <div class="theory-box-content">
+            <div class="theory-box-label">経営理論の視点 ▶ センスメイキング理論</div>
+            <p class="theory-box-text">不確実な状況を人々がどう「意味づけ」するかに注目する組織論。変化の渦中にあるとき、リーダーが語るナラティブが組織行動を方向づけます。</p>
+          </div>
+        </div>
+      <div class="card-footer">
+        <span class="card-source">HR総研 調査(2026年4月実施)</span>
         
       </div>
-    </article>
-
-    <article class="card">
-      <div class="card-header">
+    </div>
+    <div class="news-card">
+      <div class="card-num">05</div>
+      <div class="card-meta">
         <span class="theory-badge">資源ベース理論(RBV)</span>
-        <h2 class="card-headline">JT、定年を65歳へ引き上げ</h2>
+        <span class="new-badge">NEW</span>
+        <span class="tag">人事制度</span><span class="tag">シニア活躍</span>
       </div>
-      <div class="card-tags"><span class="tag">人事制度</span><span class="tag">シニア活躍</span></div>
+      <h2 class="card-headline">JT、定年を65歳へ引き上げ</h2>
       <p class="card-summary">日本たばこ産業(JT)が、2027年4月から定年年齢を現行の60歳から65歳へ引き上げると発表。年齢にかかわらず継続的に活躍できる仕組みづくりと、社員自身のキャリア自律の促進をあわせて進める方針。</p>
       
       <div class="card-footer">
-        <span class="source">日本たばこ産業株式会社 発表(2026年6月11日)</span>
+        <span class="card-source">日本たばこ産業株式会社 発表(2026年6月11日)</span>
         
       </div>
-    </article>
-
-    <article class="card">
-      <div class="card-header">
+    </div>
+    <div class="news-card">
+      <div class="card-num">06</div>
+      <div class="card-meta">
         <span class="theory-badge">ダイナミック・ケイパビリティ</span>
-        <h2 class="card-headline">新卒採用、6割超がAI書類選考で不合格経験</h2>
+        <span class="new-badge">NEW</span>
+        <span class="tag">AI活用</span><span class="tag">採用</span>
       </div>
-      <div class="card-tags"><span class="tag">AI活用</span><span class="tag">採用</span></div>
+      <h2 class="card-headline">新卒採用、6割超がAI書類選考で不合格経験</h2>
       <p class="card-summary">新卒採用担当者の64%が、AIによる書類選考で学生を不合格にした経験があると回答。一方で判定基準を社内で整備できている企業は15%未満にとどまる。</p>
-            <div class="theory-box">
-        <div class="theory-box-label">経営理論の視点 ▶ ダイナミック・ケイパビリティ</div>
-        <p class="theory-box-text">環境変化に合わせて自社の能力を感知・捕捉・再構成する力。テクノロジーが急変する時代において、静的な強みではなく変化する能力そのものが競争優位になります。</p>
-      </div>
+      <div class="theory-box">
+          <svg class="theory-box-cat" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="16" r="10" fill="#6B8F71"/>
+          <polygon points="12,10 14,4 18,10" fill="#6B8F71"/>
+          <polygon points="28,10 26,4 22,10" fill="#6B8F71"/>
+          <polygon points="12.5,9 14.5,5 17.5,9" fill="#E8A0B4"/>
+          <polygon points="27.5,9 25.5,5 22.5,9" fill="#E8A0B4"/>
+          <ellipse cx="16" cy="15" rx="2.5" ry="3" fill="#FAF7F2"/>
+          <ellipse cx="24" cy="15" rx="2.5" ry="3" fill="#FAF7F2"/>
+          <circle cx="16.5" cy="15.5" r="1.5" fill="#2B2620"/>
+          <circle cx="24.5" cy="15.5" r="1.5" fill="#2B2620"/>
+          <ellipse cx="20" cy="20" rx="1.5" ry="1" fill="#E8A0B4"/>
+          <ellipse cx="20" cy="31" rx="10" ry="8" fill="#6B8F71"/>
+          <ellipse cx="13" cy="38" rx="5" ry="3.5" fill="#6B8F71"/>
+          <ellipse cx="27" cy="38" rx="5" ry="3.5" fill="#6B8F71"/>
+          <text x="28" y="10" font-size="7" fill="#E8A0B4">?</text>
+        </svg>
+          <div class="theory-box-content">
+            <div class="theory-box-label">経営理論の視点 ▶ ダイナミック・ケイパビリティ</div>
+            <p class="theory-box-text">環境変化に合わせて自社の能力を感知・捕捉・再構成する力。テクノロジーが急変する時代において、静的な強みではなく変化する能力そのものが競争優位になります。</p>
+          </div>
+        </div>
       <div class="card-footer">
-        <span class="source">調査機関発表(2026年6月)</span>
+        <span class="card-source">調査機関発表(2026年6月)</span>
         
       </div>
-    </article>
-  </div>
-</main>
+    </div>
+    </section>
 
+    <!-- ARCHIVE -->
+    <section id="archive" style="margin-top: 56px;">
+      <div class="section-head">
+        <!-- Cat: Archive -->
+        <svg class="section-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="13" r="10" fill="#9DB8A2"/>
+          <polygon points="10,7 13,1 16,7" fill="#9DB8A2"/>
+          <polygon points="26,7 23,1 20,7" fill="#9DB8A2"/>
+          <polygon points="11,6 13,2 15,6" fill="#D4C4CA"/>
+          <polygon points="25,6 23,2 21,6" fill="#D4C4CA"/>
+          <!-- sleeping eyes -->
+          <path d="M11.5 12 Q14 10 16.5 12" stroke="#FAF7F2" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <path d="M19.5 12 Q22 10 24.5 12" stroke="#FAF7F2" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <ellipse cx="18" cy="17" rx="1.5" ry="1" fill="#D4C4CA"/>
+          <ellipse cx="18" cy="27" rx="11" ry="9" fill="#9DB8A2"/>
+          <!-- zzz -->
+          <text x="26" y="10" font-size="8" fill="#9DB8A2" font-weight="bold">z</text>
+          <text x="29" y="6" font-size="6" fill="#9DB8A2" font-weight="bold">z</text>
+        </svg>
+        <div class="section-head-text">
+          <div class="section-title">ARCHIVE</div>
+          <div class="section-subtitle">過去のニュース</div>
+        </div>
+      </div>
+
+      <p style="color:var(--text-light);font-size:0.85rem;">アーカイブはまだありません。</p>
+    </section>
+
+  </div>
+
+  <!-- ===== RIGHT: SIDEBAR ===== -->
+  <aside class="sidebar">
+
+    <!-- Mascot card -->
+    <div class="sidebar-card sidebar-mascot">
+      <!-- Cat: Thinking -->
+      <svg class="cat-think" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M56 112 Q72 98 66 82" stroke="#6B8F71" stroke-width="7" stroke-linecap="round" fill="none"/>
+        <ellipse cx="48" cy="94" rx="26" ry="22" fill="#6B8F71"/>
+        <ellipse cx="36" cy="114" rx="8" ry="6" fill="#6B8F71"/>
+        <ellipse cx="58" cy="114" rx="8" ry="6" fill="#6B8F71"/>
+        <!-- arm on chin -->
+        <ellipse cx="30" cy="90" rx="7" ry="12" fill="#6B8F71" transform="rotate(15 30 90)"/>
+        <circle cx="27" cy="100" r="7" fill="#6B8F71"/>
+        <circle cx="48" cy="54" r="24" fill="#6B8F71"/>
+        <polygon points="28,42 32,24 42,40" fill="#6B8F71"/>
+        <polygon points="68,42 64,24 54,40" fill="#6B8F71"/>
+        <polygon points="30,40 33,27 40,39" fill="#E8A0B4"/>
+        <polygon points="66,40 63,27 56,39" fill="#E8A0B4"/>
+        <ellipse cx="40" cy="52" rx="4" ry="5" fill="#FAF7F2"/>
+        <ellipse cx="56" cy="52" rx="4" ry="5" fill="#FAF7F2"/>
+        <circle cx="41" cy="53" r="2.5" fill="#2B2620"/>
+        <circle cx="57" cy="53" r="2.5" fill="#2B2620"/>
+        <ellipse cx="48" cy="61" rx="3" ry="2" fill="#E8A0B4"/>
+        <!-- tilted head effect via rotation suggestion -->
+        <text x="66" y="36" font-size="10" fill="#E8A0B4">?</text>
+        <text x="72" y="28" font-size="8" fill="#6B8F71">!</text>
+      </svg>
+      <p>毎朝6時にニュースを探して<br>Notionに届けています🐱</p>
+    </div>
+
+    <!-- Topics -->
+    <div class="sidebar-card" id="topics">
+      <div class="sidebar-title">🏷 トピックス</div>
+      <div class="topic-tags">
+        <span class="topic-tag">管理職<span class="topic-count">2</span></span>
+<span class="topic-tag">採用<span class="topic-count">2</span></span>
+<span class="topic-tag">AI活用<span class="topic-count">2</span></span>
+<span class="topic-tag">人事制度<span class="topic-count">2</span></span>
+<span class="topic-tag">リーダーシップ<span class="topic-count">1</span></span>
+<span class="topic-tag">組織変革<span class="topic-count">1</span></span>
+<span class="topic-tag">シニア活躍<span class="topic-count">1</span></span>
+
+      </div>
+    </div>
+
+    <!-- Archive list -->
+    <div class="sidebar-card">
+      <div class="sidebar-title">📅 最近のアーカイブ</div>
+      <p style="color:var(--text-light);font-size:0.8rem;">まだありません。</p>
+    </div>
+
+  </aside>
+
+</div>
+
+<!-- FOOTER -->
 <footer>
-  <p>経営理論の解説は入山章栄『世界標準の経営理論』を参考にしています。</p>
-  <p style="margin-top:4px;">Powered by <a href="https://www.notion.so/" target="_blank">Notion</a> + <a href="https://github.com/daiyatsuda/harunekochan" target="_blank">GitHub Actions</a></p>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        <img src="favicon.svg" width="28" height="28" alt="" style="opacity:0.8">
+        <span class="footer-brand-name">はるねこちゃん</span>
+      </div>
+      <p class="footer-desc">
+        人事・経営ニュースを毎朝自動収集し、<br>
+        入山章栄『世界標準の経営理論』で解説するAI秘書サイト。<br>
+        Powered by Notion + GitHub Actions
+      </p>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/daiyatsuda/harunekochan" target="_blank">GitHub リポジトリ</a>
+      <a href="https://www.notion.so/" target="_blank">Notion データベース</a>
+      <a href="#today">↑ トップへ戻る</a>
+    </div>
+  </div>
 </footer>
 
 </body>
