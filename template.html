@@ -10,7 +10,8 @@
   <meta property="og:description" content="毎朝届く人事・経営ニュースを、世界標準の経営理論で読み解くAI解説サイト。事実・考察・示唆で現場に役立つインサイトを提供します。">
   <meta property="og:url" content="https://keieiriron.github.io/harunekochan/">
   <meta property="og:site_name" content="はるねこちゃん">
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- OG_IMAGE_TAG -->
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -259,6 +260,15 @@
     .foot-links a:hover, .foot-links span:hover { color: #fff; }
     .foot-bottom { max-width: 1080px; margin: 20px auto 0; font-size: .68rem; text-align: center; }
 
+    /* ─── AUTHOR COMMENT ─── */
+    .author-comment { background: var(--rose-bg); border: 1.5px solid #F4C8D4; border-radius: 12px; padding: 16px 20px; margin-bottom: 18px; }
+    .author-comment-head { font-size: .7rem; font-weight: 700; color: var(--rose); letter-spacing: .08em; margin-bottom: 8px; }
+    .author-comment-text { font-size: .86rem; color: var(--text); line-height: 1.8; font-style: italic; }
+
+    /* ─── GISCUS ─── */
+    .giscus-wrap { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--border); }
+    .giscus-wrap-title { font-family: 'Shippori Mincho', serif; font-size: .95rem; font-weight: 700; color: var(--text); margin-bottom: 20px; }
+
     /* ─── WALKING CAT ─── */
     .cat-walk { position: fixed; bottom: 14px; left: 0; z-index: 50; pointer-events: none; animation: walkAcross 34s linear infinite; }
     .cat-walk svg { animation: bodyBob .42s ease-in-out infinite alternate; display: block; }
@@ -398,6 +408,8 @@
   <button class="tab-btn" onclick="showPage('archive')" data-page="archive">📚 アーカイブ</button>
   <button class="tab-btn" onclick="showPage('insights')" data-page="insights">🔍 考察・示唆</button>
   <button class="tab-btn" onclick="showPage('about')" data-page="about">🐱 はるねこについて</button>
+  <a class="tab-btn" href="theories/" target="_blank" rel="noopener">📖 理論用語集</a>
+  <a class="tab-btn" href="diagnose/sensemaking/" target="_blank" rel="noopener">🧠 自己診断</a>
 </div>
 
 <!-- ══════════════════════════════════════════════
@@ -432,6 +444,24 @@
         </div>
       </div>
       <!-- TODAY_CARDS -->
+      <div class="giscus-wrap">
+        <div class="giscus-wrap-title">💬 コメント・リアクション</div>
+        <script src="https://giscus.app/client.js"
+          data-repo="keieiriron/harunekochan"
+          data-repo-id="R_kgDOTAoukg"
+          data-category="General"
+          data-category-id=""
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="light"
+          data-lang="ja"
+          crossorigin="anonymous"
+          async>
+        </script>
+      </div>
     </div>
 
     <!-- SIDEBAR -->
@@ -474,7 +504,7 @@
       <!-- Share -->
       <div class="side-box share-side-box">
         <div class="share-side-label">このサイトをシェアする</div>
-        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdaiyatsuda.github.io%2Fharunekochan%2F" target="_blank" rel="noopener">
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fkeieiriron.github.io%2Fharunekochan%2F" target="_blank" rel="noopener">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
           Facebookでシェア
         </a>
@@ -652,7 +682,7 @@
       <a class="contact-btn-main" href="mailto:harunekochan65@gmail.com">
         📩 お問い合わせはこちら
       </a>
-      <a class="contact-btn-sub" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdaiyatsuda.github.io%2Fharunekochan%2F" target="_blank" rel="noopener">
+      <a class="contact-btn-sub" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fkeieiriron.github.io%2Fharunekochan%2F" target="_blank" rel="noopener">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
         Facebookでシェア
       </a>

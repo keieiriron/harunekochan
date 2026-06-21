@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>センスメイキング診断 — はるねこちゃん</title>
+  <meta name="description" content="あなたの組織のセンスメイキング力を7問で診断。入山章栄『世界標準の経営理論』のセンスメイキング理論に基づく無料診断ツール。">
+  <meta property="og:title" content="センスメイキング診断 — はるねこちゃん">
+  <meta property="og:description" content="7問で診断。あなたの組織は不確実性に立ち向かえるか？">
+  <meta property="og:url" content="https://keieiriron.github.io/harunekochan/diagnose/sensemaking/">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FAF7F2; --surface: #fff; --border: #E5DFD4;
+      --text: #2B2620; --text-sub: #6B645C; --text-light: #A89F96;
+      --green: #6B8F71; --green-dk: #4F6E55; --green-bg: #EEF4EF; --green-lt: #D4E6D7;
+      --rose: #E8A0B4; --rose-bg: #FDF0F4;
+      --amber: #C8824A; --amber-bg: #FDF5EE;
+      --blue: #5B7FA6; --blue-bg: #EEF3F8;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Zen Kaku Gothic New', sans-serif; line-height: 1.75; min-height: 100vh; }
+
+    nav { background: rgba(255,255,255,.95); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); height: 56px; padding: 0 28px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 400; }
+    .nav-back { font-size: .82rem; color: var(--green-dk); text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+    .nav-back:hover { color: var(--green); }
+    .nav-title { font-family: 'Shippori Mincho', serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-left: 8px; }
+
+    .hero { background: linear-gradient(135deg, var(--green-bg) 0%, var(--blue-bg) 100%); border-bottom: 1px solid var(--border); padding: 56px 28px 48px; text-align: center; }
+    .hero-cat { width: 80px; margin: 0 auto 20px; display: block; }
+    .hero-label { font-size: .7rem; font-weight: 700; color: var(--green-dk); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 12px; }
+    .hero-h1 { font-family: 'Shippori Mincho', serif; font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 800; line-height: 1.3; margin-bottom: 14px; }
+    .hero-h1 em { font-style: normal; color: var(--green); }
+    .hero-lead { font-size: .9rem; color: var(--text-sub); max-width: 520px; margin: 0 auto 24px; line-height: 1.85; }
+    .theory-chip { display: inline-flex; align-items: center; gap: 6px; background: var(--green); color: #fff; font-size: .72rem; font-weight: 700; padding: 6px 16px; border-radius: 20px; letter-spacing: .04em; }
+
+    .container { max-width: 680px; margin: 0 auto; padding: 48px 24px 80px; }
+
+    /* Progress bar */
+    .progress-wrap { margin-bottom: 36px; }
+    .progress-label { display: flex; justify-content: space-between; font-size: .72rem; color: var(--text-light); margin-bottom: 8px; }
+    .progress-bar-bg { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+    .progress-bar { height: 100%; background: var(--green); border-radius: 3px; transition: width .4s ease; }
+
+    /* Question card */
+    .q-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 20px; padding: 32px 32px 28px; box-shadow: 0 4px 20px rgba(43,38,32,.07); display: none; }
+    .q-card.active { display: block; }
+    .q-num { font-size: .68rem; font-weight: 700; color: var(--text-light); letter-spacing: .1em; margin-bottom: 10px; }
+    .q-text { font-family: 'Shippori Mincho', serif; font-size: 1.12rem; font-weight: 700; line-height: 1.6; margin-bottom: 24px; color: var(--text); }
+    .q-choices { display: flex; flex-direction: column; gap: 10px; }
+    .choice-btn {
+      text-align: left; background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: 12px; padding: 14px 18px; font-size: .88rem; color: var(--text);
+      cursor: pointer; transition: all .15s; font-family: 'Zen Kaku Gothic New', sans-serif;
+      line-height: 1.6;
+    }
+    .choice-btn:hover { background: var(--green-bg); border-color: var(--green-lt); color: var(--green-dk); }
+    .choice-btn.selected { background: var(--green-bg); border-color: var(--green); color: var(--green-dk); font-weight: 700; }
+
+    .nav-btns { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; }
+    .btn-prev { font-size: .82rem; color: var(--text-light); background: none; border: none; cursor: pointer; font-family: 'Zen Kaku Gothic New', sans-serif; }
+    .btn-prev:hover { color: var(--text); }
+    .btn-next { background: var(--green); color: #fff; font-size: .88rem; font-weight: 700; padding: 11px 28px; border-radius: 24px; border: none; cursor: pointer; font-family: 'Zen Kaku Gothic New', sans-serif; transition: background .15s; }
+    .btn-next:hover { background: var(--green-dk); }
+    .btn-next:disabled { background: var(--border); cursor: not-allowed; }
+
+    /* Result */
+    .result-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 20px; padding: 36px 32px; box-shadow: 0 4px 20px rgba(43,38,32,.07); display: none; }
+    .result-card.active { display: block; }
+    .result-score-wrap { text-align: center; margin-bottom: 28px; }
+    .result-score { font-family: 'Shippori Mincho', serif; font-size: 4rem; font-weight: 800; color: var(--green); line-height: 1; }
+    .result-score-max { font-size: 1.2rem; color: var(--text-light); }
+    .result-type { font-family: 'Shippori Mincho', serif; font-size: 1.4rem; font-weight: 800; margin: 10px 0 6px; color: var(--text); }
+    .result-type-sub { font-size: .8rem; color: var(--text-light); letter-spacing: .06em; }
+    .result-desc { font-size: .88rem; color: var(--text-sub); line-height: 1.85; margin-bottom: 24px; padding: 20px; background: var(--green-bg); border-radius: 12px; }
+    .result-section-title { font-family: 'Shippori Mincho', serif; font-size: .95rem; font-weight: 700; color: var(--text); margin: 24px 0 14px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .advice-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+    .advice-list li { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; font-size: .86rem; color: var(--text); line-height: 1.7; display: flex; gap: 10px; align-items: flex-start; }
+    .advice-list li::before { content: '→'; color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+    .theory-note { background: var(--amber-bg); border-left: 3px solid var(--amber); border-radius: 0 10px 10px 0; padding: 16px 18px; margin-bottom: 24px; }
+    .theory-note-label { font-size: .65rem; font-weight: 700; color: var(--amber); letter-spacing: .08em; margin-bottom: 6px; }
+    .theory-note-text { font-size: .84rem; color: var(--text); line-height: 1.8; }
+    .result-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 28px; }
+    .action-btn { display: inline-flex; align-items: center; gap: 8px; font-size: .84rem; font-weight: 700; padding: 12px 24px; border-radius: 24px; text-decoration: none; transition: all .15s; }
+    .action-btn.primary { background: var(--green); color: #fff; }
+    .action-btn.primary:hover { background: var(--green-dk); }
+    .action-btn.secondary { background: #1877F2; color: #fff; }
+    .action-btn.secondary:hover { background: #145DB2; }
+    .action-btn.outline { background: var(--bg); border: 1.5px solid var(--border); color: var(--text-sub); cursor: pointer; border: 1.5px solid var(--border); font-family: 'Zen Kaku Gothic New', sans-serif; }
+    .action-btn.outline:hover { border-color: var(--green-lt); color: var(--green-dk); background: var(--green-bg); }
+
+    @media (max-width: 600px) {
+      .container { padding: 32px 16px 60px; }
+      .q-card, .result-card { padding: 24px 20px 20px; }
+      .hero { padding: 40px 20px 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-back" href="../../">← はるねこちゃんへ</a>
+  <span class="nav-title">🧠 センスメイキング診断</span>
+</nav>
+
+<div class="hero">
+  <svg class="hero-cat" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M28 38 Q32 12 46 18 Q44 28 36 40Z" fill="white" stroke="#3B1E08" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M30 37 Q34 16 45 20 Q43 28 38 38Z" fill="#F9C5D0"/>
+    <path d="M72 38 Q68 12 54 18 Q56 28 64 40Z" fill="white" stroke="#3B1E08" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M70 37 Q66 16 55 20 Q57 28 62 38Z" fill="#F9C5D0"/>
+    <circle cx="50" cy="54" r="36" fill="white" stroke="#3B1E08" stroke-width="3"/>
+    <path d="M34 50 Q42 46 50 50" stroke="#3B1E08" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+    <path d="M50 50 Q58 46 66 50" stroke="#3B1E08" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+    <ellipse cx="50" cy="58" rx="4" ry="2.8" fill="#3B1E08"/>
+    <path d="M41 67 Q46 72 50 68 Q54 72 59 67" stroke="#3B1E08" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <ellipse cx="32" cy="61" rx="10" ry="6" fill="#F4A0B4" opacity=".45"/>
+    <ellipse cx="68" cy="61" rx="10" ry="6" fill="#F4A0B4" opacity=".45"/>
+    <circle cx="74" cy="28" r="12" fill="#EEF4EF" stroke="#6B8F71" stroke-width="1.5"/>
+    <text x="68" y="33" font-size="13" fill="#4F6E55" font-weight="bold">?</text>
+  </svg>
+  <p class="hero-label">Management Theory Quiz</p>
+  <h1 class="hero-h1">あなたの組織の<br><em>センスメイキング力</em>は？</h1>
+  <p class="hero-lead">7つの設問に答えて、不確実な状況を「意味づけ」する組織能力を診断。入山章栄『世界標準の経営理論』のセンスメイキング理論をベースにした無料診断です。</p>
+  <span class="theory-chip">📚 センスメイキング理論 (Weick, 1995)</span>
+</div>
+
+<div class="container">
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="prog-label">質問 1 / 7</span>
+      <span id="prog-pct">0%</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar" id="prog-bar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="q-card active" id="q1">
+    <div class="q-num">質問 1 / 7</div>
+    <p class="q-text">組織で想定外の出来事（市場の急変・組織変更など）が起きたとき、リーダーは真っ先に何をしますか？</p>
+    <div class="q-choices">
+      <button class="choice-btn" onclick="select(1, 1, this)">まず状況を「自分たちなりの言葉」で解釈し、チームに共有する</button>
+      <button class="choice-btn" onclick="select(1, 2, this)">データや事実を集めて分析してから動く</button>
+      <button class="choice-btn" onclick="select(1, 3, this)">前例や過去の成功パターンを参照して対処する</button>
+      <button class="choice-btn" onclick="select(1, 0, this)">まだ決まったやり方はなく、その都度バラバラに対応している</button>
+    </div>
+    <div class="nav-btns">
+      <span></span>
+      <button class="btn-next" id="next1" disabled onclick="nextQ(1)">次へ →</button>
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="q-card" id="q2">
+    <div class="q-num">質問 2 / 7</div>
+    <p class="q-text">変化の激しい局面で、組織メンバーが「なぜこうなったのか」を自分なりに解釈・納得できていますか？</p>
+    <div class="q-choices">
+      <button class="choice-btn" onclick="select(2, 3, this)">はい。多くのメンバーが自分の言葉で状況を語れている</button>
+      <button class="choice-btn" onclick="select(2, 2, this)">上司や経営から説明はあるが、現場では解釈がばらついている</button>
+      <button class="choice-btn" onclick="select(2, 1, this)">あまりできていない。情報共有が不足している</button>
+      <button class="choice-btn" onclick="select(2, 0, this)">ほとんどいない。何が起きているか分からないという声が多い</button>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevQ(2)">← 戻る</button>
+      <button class="btn-next" id="next2" disabled onclick="nextQ(2)">次へ →</button>
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="q-card" id="q3">
+    <div class="q-num">質問 3 / 7</div>
+    <p class="q-text">組織のビジョンや方針は、現場メンバーの「行動の拠り所」になっていますか？</p>
+    <div class="q-choices">
+      <button class="choice-btn" onclick="select(3, 3, this)">はい。ビジョンを軸に判断・行動できるメンバーが多い</button>
+      <button class="choice-btn" onclick="select(3, 2, this)">一部のメンバーは使えているが、全体には浸透していない</button>
+      <button class="choice-btn" onclick="select(3, 1, this)">言葉としては知っているが、日常業務では意識されていない</button>
+      <button class="choice-btn" onclick="select(3, 0, this)">ビジョンはあるが形骸化している、または存在自体を知らない人が多い</button>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevQ(3)">← 戻る</button>
+      <button class="btn-next" id="next3" disabled onclick="nextQ(3)">次へ →</button>
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="q-card" id="q4">
+    <div class="q-num">質問 4 / 7</div>
+    <p class="q-text">管理職は「なぜこの変化が起きているのか」を自分の言葉で部下に語れていますか？</p>
+    <div class="q-choices">
+      <button class="choice-btn" onclick="select(4, 3, this)">はい。ほぼ全員が自分の解釈を持ち、語ることができる</button>
+      <button class="choice-btn" onclick="select(4, 2, this)">意識の高い管理職は語れるが、全体ではバラつきがある</button>
+      <button class="choice-btn" onclick="select(4, 1, this)">経営の言葉をそのまま伝えるだけで、自分の解釈が乏しい</button>
+      <button class="choice-btn" onclick="select(4, 0, this)">管理職自身も意味が分からず、部下に聞かれると困る状態</button>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevQ(4)">← 戻る</button>
+      <button class="btn-next" id="next4" disabled onclick="nextQ(4)">次へ →</button>
+    </div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="q-card" id="q5">
+    <div class="q-num">質問 5 / 7</div>
+    <p class="q-text">組織変革や新施策を進める際、抵抗や混乱が起きたときどう対処しますか？</p>
+    <div class="q-choices">
+      <button class="choice-btn" onclick="select(5, 3, this)">「なぜ必要か」「何が変わるのか」を対話を通じて意味づけ直す</button>
+      <button class="choice-btn" onclick="select(5, 2, this)">FAQや説明資料を整備して情報提供する</button>
+      <button class="choice-btn" onclick="select(5, 1, this)">トップから強いメッセージで方向性を示す</button>
+      <button class="choice-btn" onclick="select(5, 0, this)">抵抗が収まるのを待ち、強行突破で進める</button>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevQ(5)">← 戻る</button>
+      <button class="btn-next" id="next5" disabled onclick="nextQ(5)">次へ →</button>
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="q-card" id="q6">
+    <div class="q-num">質問 6 / 7</div>
+    <p class="q-text">組織内で「失敗」や「想定外」が起きたとき、それを振り返り「意味」を見出す場がありますか？</p>
+    <div class="q-choices">
+      <button class="choice-btn" onclick="select(6, 3, this)">はい。定期的に振り返り、学びとして言語化する場がある</button>
+      <button class="choice-btn" onclick="select(6, 2, this)">一部チームでは行っているが、組織全体の習慣にはなっていない</button>
+      <button class="choice-btn" onclick="select(6, 1, this)">失敗は隠す文化があり、オープンな振り返りは難しい</button>
+      <button class="choice-btn" onclick="select(6, 0, this)">ほとんどなく、失敗はうやむやに終わることが多い</button>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevQ(6)">← 戻る</button>
+      <button class="btn-next" id="next6" disabled onclick="nextQ(6)">次へ →</button>
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="q-card" id="q7">
+    <div class="q-num">質問 7 / 7</div>
+    <p class="q-text">あなたの組織の「これからの方向性」について、現場のメンバーはどの程度腹落ちしていますか？</p>
+    <div class="q-choices">
+      <button class="choice-btn" onclick="select(7, 3, this)">多くのメンバーが納得・共感している</button>
+      <button class="choice-btn" onclick="select(7, 2, this)">理解はしているが、納得・共感まではいっていない</button>
+      <button class="choice-btn" onclick="select(7, 1, this)">「とりあえず従う」というスタンスの人が多い</button>
+      <button class="choice-btn" onclick="select(7, 0, this)">方向性自体が不明確で、メンバーは混乱している</button>
+    </div>
+    <div class="nav-btns">
+      <button class="btn-prev" onclick="prevQ(7)">← 戻る</button>
+      <button class="btn-next" id="next7" disabled onclick="showResult()">結果を見る</button>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div class="result-card" id="result">
+    <div class="result-score-wrap">
+      <div>
+        <span class="result-score" id="res-score">0</span>
+        <span class="result-score-max"> / 21点</span>
+      </div>
+      <div class="result-type" id="res-type"></div>
+      <div class="result-type-sub" id="res-sub"></div>
+    </div>
+    <div class="result-desc" id="res-desc"></div>
+
+    <div class="result-section-title">📋 改善のアクション提案</div>
+    <ul class="advice-list" id="res-advice"></ul>
+
+    <div class="theory-note">
+      <div class="theory-note-label">THEORY BACKGROUND — センスメイキング理論</div>
+      <div class="theory-note-text">
+        カール・ワイク（Karl Weick, 1995）が提唱。組織メンバーが「何が起きているのか」を解釈し、集団として意味を共有するプロセスを扱う理論。特に不確実性の高い状況や組織変革において、リーダーの「意味づけ（sensegiving）」能力が組織の適応力を左右する。
+        <a href="../../theories/sensemaking/" style="color:var(--green-dk); font-weight:700; margin-left:6px;">→ 詳しく読む</a>
+      </div>
+    </div>
+
+    <div class="result-actions">
+      <a class="action-btn primary" href="../../">← はるねこちゃんへ</a>
+      <a class="action-btn secondary" id="fb-share-btn" href="#" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        結果をシェア
+      </a>
+      <button class="action-btn outline" onclick="restart()">もう一度やり直す</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var answers = {};
+var totalQ = 7;
+
+function select(qNum, score, el) {
+  var card = document.getElementById('q' + qNum);
+  card.querySelectorAll('.choice-btn').forEach(function(b){ b.classList.remove('selected'); });
+  el.classList.add('selected');
+  answers[qNum] = score;
+  var nextBtn = document.getElementById('next' + qNum);
+  if (nextBtn) nextBtn.disabled = false;
+  updateProgress(qNum);
+}
+
+function updateProgress(current) {
+  var answered = Object.keys(answers).length;
+  var pct = Math.round((answered / totalQ) * 100);
+  document.getElementById('prog-bar').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+function nextQ(current) {
+  document.getElementById('q' + current).classList.remove('active');
+  var next = current + 1;
+  document.getElementById('q' + next).classList.add('active');
+  document.getElementById('prog-label').textContent = '質問 ' + next + ' / 7';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function prevQ(current) {
+  document.getElementById('q' + current).classList.remove('active');
+  var prev = current - 1;
+  document.getElementById('q' + prev).classList.add('active');
+  document.getElementById('prog-label').textContent = '質問 ' + prev + ' / 7';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+var TYPES = [
+  {
+    min: 0, max: 7,
+    type: '混乱型', sub: 'Confused Organization',
+    desc: '組織全体として不確実性に対する意味づけのメカニズムが整っていない状態です。変化が起きるたびに「何が起きているのか」が共有されず、個人・チームレベルでバラバラの解釈が広がっています。センスメイキングの出発点に立ち返る必要があります。',
+    advice: [
+      '経営・管理職が自分の言葉で「今なぜこの変化が起きているか」を語る場を設ける（月1回でも可）',
+      '失敗・想定外の出来事を振り返るチームミーティングを導入し、「何が起きたか」を言語化する習慣をつくる',
+      'ビジョン・方針の「意味」を現場の言葉で翻訳する作業を管理職研修に組み込む',
+      '「私はこう解釈している」と上司が率先して語ることで、心理的安全性を高める',
+    ]
+  },
+  {
+    min: 8, max: 12,
+    type: '模索型', sub: 'Searching Organization',
+    desc: '意味づけの取り組みは始まっているものの、組織全体に浸透するには至っていません。一部のリーダーや部門では機能しているが、均一ではない状態です。仕組み化と対話の質向上が次のステップです。',
+    advice: [
+      '「センスギバー（意味を与える人）」としての管理職育成プログラムを導入する',
+      'ビジョン浸透のための対話型ワークショップ（タウンホールミーティングなど）を定期開催する',
+      '失敗事例や変化への適応事例を「学習物語」としてナレッジ化し、組織内で共有する',
+      '各部門で「この変化の意味は何か」を議論するダイアログ・セッションを月次で実施する',
+    ]
+  },
+  {
+    min: 13, max: 17,
+    type: '実践型', sub: 'Sensemaking Organization',
+    desc: '組織内にセンスメイキングの文化が根づいており、多くのメンバーが変化を意味づけながら行動できています。さらなる高みとして、部門を超えた意味共有と、外部変化への先読み能力を強化しましょう。',
+    advice: [
+      '部門を横断した「変化を読み解く」対話セッションを導入し、サイロを超えた意味共有を強化する',
+      '弱いシグナル（市場・社会の兆候）を早期にキャッチして意味づけするアンテナ役（チーフ・センスメイカー）を設置する',
+      '過去の意味づけが正確だったかを振り返るシステムを導入し、組織の解釈精度を継続改善する',
+      '優れた意味づけの事例を「ストーリー資産」として蓄積し、新任マネジャーの育成に活用する',
+    ]
+  },
+  {
+    min: 18, max: 21,
+    type: '先導型', sub: 'Pioneering Sensemaking',
+    desc: '非常に高いセンスメイキング能力を持つ組織です。変化をいち早く捉え、組織全体で意味を共有しながら行動できています。この能力は競争優位の源泉になります。外部（業界・社会）へのセンスメイキングにも目を向けましょう。',
+    advice: [
+      '自社のセンスメイキング文化をブランドとして対外発信し、採用・パートナーシップに活かす',
+      'センスメイキングのフレームワークを業界標準として提案・発信するポジションを確立する',
+      '先読みした意味づけを事業戦略に接続する「戦略的センスメイキング」のプロセスを制度化する',
+      'タレントマネジメントに「意味づけ力」の評価指標を組み込み、人材開発に反映する',
+    ]
+  },
+];
+
+function showResult() {
+  document.querySelectorAll('.q-card').forEach(function(c){ c.classList.remove('active'); });
+  var total = 0;
+  for (var k in answers) { total += answers[k]; }
+
+  var type = TYPES[0];
+  for (var i = 0; i < TYPES.length; i++) {
+    if (total >= TYPES[i].min && total <= TYPES[i].max) { type = TYPES[i]; break; }
+  }
+
+  document.getElementById('res-score').textContent = total;
+  document.getElementById('res-type').textContent = type.type;
+  document.getElementById('res-sub').textContent = type.sub;
+  document.getElementById('res-desc').textContent = type.desc;
+
+  var ul = document.getElementById('res-advice');
+  ul.innerHTML = '';
+  type.advice.forEach(function(a) {
+    var li = document.createElement('li');
+    li.textContent = a;
+    ul.appendChild(li);
+  });
+
+  var shareText = encodeURIComponent('センスメイキング診断で「' + type.type + '」（' + total + '/21点）でした！ はるねこちゃんで診断してみよう');
+  var shareUrl = 'https://keieiriron.github.io/harunekochan/diagnose/sensemaking/';
+  document.getElementById('fb-share-btn').href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl) + '&quote=' + shareText;
+
+  document.getElementById('prog-bar').style.width = '100%';
+  document.getElementById('prog-pct').textContent = '100%';
+  document.getElementById('prog-label').textContent = '診断完了！';
+
+  document.getElementById('result').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restart() {
+  answers = {};
+  document.getElementById('result').classList.remove('active');
+  document.querySelectorAll('.q-card').forEach(function(c){ c.classList.remove('active'); });
+  document.querySelectorAll('.choice-btn').forEach(function(b){ b.classList.remove('selected'); });
+  document.querySelectorAll('.btn-next').forEach(function(b){ b.disabled = true; });
+  document.getElementById('q1').classList.add('active');
+  document.getElementById('prog-bar').style.width = '0%';
+  document.getElementById('prog-pct').textContent = '0%';
+  document.getElementById('prog-label').textContent = '質問 1 / 7';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>

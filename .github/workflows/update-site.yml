@@ -22,6 +22,11 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install dependencies
+        run: |
+          pip install pillow requests
+          sudo apt-get install -y fonts-noto-cjk
+
       - name: Generate index.html
         env:
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
@@ -32,7 +37,7 @@ jobs:
         run: |
           git config user.name "haruneko-bot"
           git config user.email "actions@github.com"
-          git add index.html
+          git add index.html theories/ assets/ post_queue.md || true
           if git diff --cached --quiet; then
             echo "変更なし — スキップ"
           else
