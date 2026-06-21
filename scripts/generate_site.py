@@ -903,9 +903,9 @@ def generate_blog_pages(posts: list[dict]) -> None:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ブログ | はるねこちゃん — 人事・経営コラム</title>
+<title>はるねこちゃんの独り言 | はるねこちゃん</title>
 <meta name="description" content="人事・組織・経営に関するコラム。経営理論を実務に接続するHRプロフェッショナルの視点でお届けします。">
-<meta property="og:title" content="ブログ | はるねこちゃん">
+<meta property="og:title" content="はるねこちゃんの独り言 | はるねこちゃん">
 <meta property="og:url" content="{SITE_URL}blog/">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 {BLOG_CSS}
@@ -918,7 +918,7 @@ def generate_blog_pages(posts: list[dict]) -> None:
 <div class="hero">
   <div class="hero-inner">
     <p class="hero-kicker">Blog — HR &amp; Management Column</p>
-    <h1>ブログ</h1>
+    <h1>はるねこちゃんの独り言</h1>
     <p class="hero-lead">人事・組織・経営に関するコラム。ニュース解説とは別に、実務で感じたことや経営理論の実践的な使い方を書いています。</p>
   </div>
 </div>
