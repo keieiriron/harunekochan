@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>人事データが経営の主役になった日 | はるねこちゃんブログ</title>
+<meta name="description" content="SmartHRの調査が含意を持つ。人事部門の「感覚」ではなく「データ」で経営判断する流れが、いよいよ本流になってきた。">
+<meta property="og:title" content="人事データが経営の主役になった日">
+<meta property="og:description" content="SmartHRの調査が含意を持つ。人事部門の「感覚」ではなく「データ」で経営判断する流れが、いよいよ本流になってきた。">
+<meta property="og:url" content="https://keieiriron.github.io/harunekochan/blog/posts/hr-data-management-20260624/">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#FAF7F2;color:#2B2620;font-family:'Noto Sans JP',sans-serif;line-height:1.75;min-height:100vh}
+nav{background:rgba(255,255,255,.95);backdrop-filter:blur(14px);border-bottom:1px solid #E5DFD4;height:56px;padding:0 28px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:400}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:#2B2620;font-weight:700;font-size:1rem}
+.nav-logo img{width:28px;height:28px}
+.nav-back{font-size:.8rem;color:#6B8F71;text-decoration:none;margin-left:auto;font-weight:700}
+.nav-back:hover{color:#4F6E55}
+.hero{background:#fff;border-bottom:1px solid #E5DFD4;padding:52px 28px 40px}
+.hero-inner{max-width:860px;margin:0 auto}
+.hero-kicker{font-size:.68rem;font-weight:700;color:#4F6E55;letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.hero-kicker::before{content:'';width:16px;height:2px;background:#6B8F71;display:block}
+h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;line-height:1.25;margin-bottom:14px;font-family:serif}
+.hero-lead{font-size:.9rem;color:#6B645C;line-height:1.85;max-width:580px}
+.container{max-width:860px;margin:0 auto;padding:48px 28px 80px}
+.blog-list{display:flex;flex-direction:column;gap:24px}
+.blog-card{background:#fff;border:1.5px solid #E5DFD4;border-top:4px solid #6B8F71;border-radius:16px;padding:26px 28px 20px;box-shadow:0 4px 18px rgba(43,38,32,.06);transition:box-shadow .2s,transform .2s;text-decoration:none;color:inherit;display:block}
+.blog-card:hover{box-shadow:0 10px 36px rgba(43,38,32,.12);transform:translateY(-2px)}
+.blog-card-meta{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.cat-badge{font-size:.62rem;font-weight:700;padding:3px 10px;border-radius:20px;background:#6B8F71;color:#fff;letter-spacing:.04em}
+.date-badge{font-size:.66rem;color:#A89F96;font-weight:500}
+.tag-badge{font-size:.62rem;padding:3px 10px;border-radius:6px;background:#FAF7F2;border:1px solid #E5DFD4;color:#A89F96}
+.blog-card-title{font-size:1.15rem;font-weight:800;line-height:1.5;margin-bottom:10px;font-family:serif;color:#2B2620}
+.blog-card-lead{font-size:.86rem;color:#6B645C;line-height:1.8;margin-bottom:14px}
+.read-more{font-size:.76rem;font-weight:700;color:#4F6E55;display:inline-flex;align-items:center;gap:4px}
+.read-more::after{content:'→'}
+/* Single post */
+.post-hero{background:#fff;border-bottom:1px solid #E5DFD4;padding:52px 28px 40px}
+.post-hero-inner{max-width:740px;margin:0 auto}
+.post-hero .cat-badge{display:inline-block;margin-bottom:14px}
+.post-hero h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;line-height:1.3;margin-bottom:16px;font-family:serif}
+.post-hero-lead{font-size:.95rem;color:#6B645C;line-height:1.85;padding:18px 22px;background:#EEF4EF;border-left:3px solid #6B8F71;border-radius:0 10px 10px 0}
+.post-meta{margin-top:16px;font-size:.72rem;color:#A89F96;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.post-body{max-width:740px;margin:0 auto;padding:48px 28px 80px}
+.post-body p{font-size:.93rem;line-height:1.95;color:#2B2620;margin-bottom:1.4em}
+.post-body h2{font-family:serif;font-size:1.2rem;font-weight:800;color:#2B2620;margin:2em 0 .8em;padding-bottom:.4em;border-bottom:2px solid #E5DFD4}
+.post-body h3{font-family:serif;font-size:1rem;font-weight:700;color:#2B2620;margin:1.5em 0 .6em}
+.back-btn{display:inline-flex;align-items:center;gap:8px;font-size:.84rem;font-weight:700;color:#4F6E55;background:#EEF4EF;border:1px solid #D4E6D7;padding:10px 22px;border-radius:24px;text-decoration:none;margin-top:32px;transition:background .15s}
+.back-btn:hover{background:#D4E6D7}
+.empty-state{text-align:center;padding:60px 24px;color:#A89F96;font-size:.9rem}
+footer{background:#1A1410;color:rgba(255,255,255,.45);padding:24px 28px;text-align:center;font-size:.75rem}
+@media(max-width:600px){
+  nav{padding:0 14px;height:52px}
+  .hero,.post-hero{padding:36px 16px 28px}
+  .container,.post-body{padding:28px 16px 60px}
+  .blog-card{padding:18px 16px 14px}
+  .blog-card-title{font-size:1rem}
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="../../../"><img src="../../../favicon.svg" alt="">はるねこちゃん</a>
+  <a class="nav-back" href="../../">← ブログ一覧</a>
+</nav>
+<div class="post-hero">
+  <div class="post-hero-inner">
+    <span class="cat-badge">人事コンサルティング</span>
+    <h1>人事データが経営の主役になった日</h1>
+    <p class="post-hero-lead">SmartHRの調査が含意を持つ。人事部門の「感覚」ではなく「データ」で経営判断する流れが、いよいよ本流になってきた。</p>
+    <div class="post-meta">
+      <span>📅 6月24日</span>
+      <span class="tag-badge">HR</span><span class="tag-badge">制度設計</span>
+    </div>
+  </div>
+</div>
+<div class="post-body">
+  <p>SmartHRが発表した人的資本データの実態調査が面白い。国内企業の9割が「人事データは経営判断の主役になった」と回答している。数年前まで「参考事項」だった人事指標が、今やリアルタイムの意思決定要素になっている。</p>
+<p>これは営業データや財務データが経営の中枢に座っていった道筋と同じだ。「人事はインテュイション」と言われた時代が終わり、数字で語る「人材エコノミクス」の時代が到来した。</p>
+<p>だが、落とし穴がある。データを持っていても「何を測るか」がなければ意味がない。離職率、エンゲージメントスコア、スキルマッチ率…どれも大事だ。しかし「経営戦略とどうつながるのか」まで言語化できている人事部門はまだ少ない。</p>
+<p>そこが実は人事の最大の仕事なのだと思う。データは出口に過ぎない。「なぜその指標が下がると事業が倫りなくなるのか」というストーリーを描ける人が、真の「人村コンサルタント」の役割を果たせる。</p>
+  <a class="back-btn" href="../../">← ブログ一覧に戻る</a>
+</div>
+<footer>© 2025 はるねこちゃん — 人事・経営ニュース × 経営理論</footer>
+</body>
+</html>
